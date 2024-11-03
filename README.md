@@ -34,9 +34,10 @@ Python SDK<br> によるコンテンツの安全性
 - [Azure AI Studio の概要](https://aka.ms/azureaistudio): プロジェクトを作成する
 - [Azure AI ドキュメント インテリジェンス (v4.0 - 2024-02-29 プレビュー)](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0)
 
-- ***[コンピューティング インスタンス - コード開発用]*** GPU を使用しないローエンド インスタンスをお勧めします: **[Standard_E2as_v4] (AMD 2 コア、16 GB RAM、32 GB ストレージ) または **[Standard_DS11_v2]** (Intel 2 コア、14 GB RAM、28 GB ストレージ、GPU なし)  
-- ***[コンピューティングクラスター - SLM/LLM の微調整用]*** 単一の NVIDIA A100 GPU ノード ()**[Standard_NC24ads_A100_v4]** をお勧めします。専用のクォータがない場合、または予算が限られている場合は、 を選択します**[低優先度 VM]**。
-- ***[コンピューティング クラスター - SLM/LLM デプロイ用]*** 単一の NVIDIA V100 GPU ノード () **[Standard_NC6s_v3]**または 単一の NVIDIA A100 GPU ノード () をお勧めします**[Standard_NC24ads_A100_v4]**。
+- ***[Computing Instance - コード開発用]*** GPU を使用しないローエンド インスタンスをお勧めします: **[Standard_E2as_v4]** (AMD 2 コア、16 GB RAM、32 GB ストレージ) または **[Standard_DS11_v2]** (Intel 2 コア、14 GB RAM、28 GB ストレージ、GPU なし)  
+- ***[Computing Cluster - SLM/LLM の微調整用]*** 単一の NVIDIA A100 GPU ノード (**[Standard_NC24ads_A100_v4]**) をお勧めします。専用のクォータがない場合、または予算が限られている場合は、
+**[低優先度 VM]** を選択します。
+- ***[Computing Cluster - SLM/LLM デプロイ用]*** 単一の NVIDIA V100 GPU ノード (**[Standard_NC6s_v3]**) または 単一の NVIDIA A100 GPU ノード (**[Standard_NC24ads_A100_v4]**) をお勧めします。
 
 上記の要件をまだお持ちでない場合は、まずラボの準備に進んでください。
 ### [Lab 0. Lab preparation](0_lab_preparation)
