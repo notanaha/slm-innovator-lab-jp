@@ -173,3 +173,4 @@ outputs/
 _site/
 
 Gemfile.lock
+**/config_copy.yml
