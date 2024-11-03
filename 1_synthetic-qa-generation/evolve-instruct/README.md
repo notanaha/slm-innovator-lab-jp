@@ -8,41 +8,41 @@ nav_order: 4.2
 
 # Evolve-Instruct
 
-## Overview
-The Evolve Instruct method creates more diverse and complex instructions by modifying (augmenting) existing instruction data. To achieve this, this technique utilizes LLMs such as GPT-4o to rewrite or transform existing instructions. In particular, It uses two strategies to make instructions more complex or create new instructions: In-depth Evolving and In-breadth Evolving.
+## 概要
+Evolve Instructメソッドは、既存の命令データを変更(拡張)することにより、より多様で複雑な命令を作成します。これを実現するために、この手法ではGPT-4oなどのLLMを利用して、既存の命令を書き換えたり変換したりします。特に、命令をより複雑にしたり、新しい命令を作成したりするために、In-depth Evolving と In-breadth Evolving の 2 つの戦略を使用します。
 
-- In-depth Evolving: Make an instruction more difficult by adding constraints to it, making it more specific, increasing the logical reasoning steps, or complicating the input.
-- In-breadth Evolving: Create completely new commands based on existing commands to expand the scope of topics and technologies and increase the diversity of your datasets.
+- In-depth Evolving: 命令に制約を追加したり、より具体的にしたり、論理的な推論のステップを増やしたり、入力を複雑にしたりして、命令をより難しくします。
+- In-wideth Evolving: 既存のコマンドに基づいてまったく新しいコマンドを作成し、トピックとテクノロジの範囲を拡大し、データセットの多様性を高めます。
 
-## Implementation
-This open-source implementation is based on the [WizardLM paper](https://arxiv.org/abs/2304.12244) and [h2o-wizardlm](https://github.com/h2oai/h2o-wizardlm).
-We added the following features to the original implementation:
+## 実装
+このオープンソースの実装は、[WizardLMの論文](https://arxiv.org/abs/2304.12244)と[h2o-wizardlm](https://github.com/h2oai/h2o-wizardlm)に基づいています。
+元の実装に次の機能が追加されました。
 
-- Modified it to be able to call Azure OpenAI by adding the `AzureGPTPipeline` class.
-- The prompt has been refined and modified to support multiple languages. Use `--language` argument for other language. (e.g., `--language Korean`)
-- Made it possible to create questions only when necessary. A better strategy is to create questions and answers separately. Use `--question_only` argument. (e.g., `--questioin_only True`)
-- Prevented infinite loop. `mutate()` in the original implementation determines the validity of the augmented statement and repeats the loop until it is valid. However, this process takes a very long time and there is a problem in that the loop repeats infinitely in certain situations.
+- クラスを追加することで Azure OpenAI を呼び出せるように変更しました`AzureGPTPipeline`。
+- プロンプトは、複数の言語をサポートするように改良および変更されました。 `--language` 他の言語の引数を使用してください。(例: `--language Korean`)
+- 必要なときだけ問題を作成できるようにしました。より良い戦略は、質問と回答を別々に作成することです。引数を使用します `--question_only` 。(例: `--questioin_only True`)
+- 無限ループを防止しました。 `mutate()` 元の実装では、拡張ステートメントの有効性を判断し、有効になるまでループを繰り返します。ただし、このプロセスには非常に長い時間がかかり、特定の状況でループが無限に繰り返されるという問題があります。
 
-## How to create dataset
+## データセットの作成方法
 
-### Option 1. If you want to generate your own seed dataset through this lab (Please check `../seed`)
-Example datasets are placed in this [folder](../seed/samples). Please try the minimal example first and configure your dataset by referring to the tunable parameters.
+### オプション1.このラボを通じて独自のシードデータセットを生成する場合(確認してください `../seed`)
+サンプルデータセットは、この[フォルダ](../seed/samples)に配置されます。最初に最小限の例を試し、調整可能なパラメーターを参照してデータセットを構成してください。
 
-Debug for test
+テスト用のデバッグ
 ```shell
 chmod +x run_debug.sh
 ./run_debug.sh
 ```
 
-### Option 2. If you already have your own dataset
-Example datasets are placed in this [folder](samples). Please try the minimal example first and configure your dataset by referring to the tunable parameters.
+### オプション2.すでに独自のデータセットがある場合
+サンプルデータセットは、この[フォルダ](samples)に配置されます。最初に最小限の例を試し、調整可能なパラメーターを参照してデータセットを構成してください。
 
-Debug for test
+テスト用のデバッグ
 ```shell
 python evolve.py --seed_file xxx.jsonl --column_names Instruction --num_rows 50 --max_len_chars 512 --language English
 ```
 
-### Tunable parameters
+### 調整可能なパラメータ
 ```python
 parser.add_argument("--seed_file", type=str)
 parser.add_argument("--column_names", nargs='+', default="Instruction")
@@ -56,5 +56,5 @@ parser.add_argument("--language", type=str, default="English")
 parser.add_argument("--question_only", type=bool, default=True)
 ```
 
-Run example:
+実行例:
 ![evolve-instruct-run-example](../imgs/evolve-instruct-run-example.png)

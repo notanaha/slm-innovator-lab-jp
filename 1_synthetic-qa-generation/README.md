@@ -17,105 +17,105 @@ nav_order: 4
 
 ---
 
-For LLM/SLM fine-tuning, RAG, or evaluation, it is often necessary to generate data in Q&A format from real-world raw data. However, in scenarios where you need to create a dataset from scratch, rather than from a ready-made dataset, you will face many challenges.
+LLM/SLMのファインチューニング、RAG、または評価のために、実世界の生データからQ&A形式でデータを生成する必要があることがよくあります。 ただし、既製のデータセットからではなく、データセットを最初から作成する必要があるシナリオでは、多くの課題に直面します。
 
-This hands-on lab aims to alleviate some of that headache by demonstrating how to create/augment a QnA dataset from complex unstructured data, assuming a real-world scenario. The sample aims to be step-by-step for developers and data scientists, as well as those in the field, to try it out with a little help.
+このハンズオン ラボは、実際のシナリオを想定して、複雑な非構造化データから QnA データセットを作成/拡張する方法を示すことで、その頭痛の種の一部を軽減することを目的としています。 このサンプルは、開発者やデータ サイエンティスト、および現場の人々が少しの助けを借りて試すための段階的なものになることを目指しています。
 
-## 1. How to get started 
-Any option is fine, but you may wish to refer to the instructions below:
-- For engineers or practitioners in the field who want to use this hands-on in PoC/MVP, we recommend Option 1.
-- For instructors who want to use this hands-on in their workshops, we recommend Option 2.
-- For developers in the field who want to launch a production, we recommend Option 3.
+## 1. 利用開始方法 
+どのオプションでも問題ありませんが、以下の手順を参照することをお勧めします。
+- この分野のエンジニアや実務家で、このハンズオンをPoC/MVPで活用したい方には、オプション1をお勧めします。
+- このハンズオンをワークショップで使用したい講師には、オプション2をお勧めします。
+- 本番環境を立ち上げたい現場の開発者には、オプション 3 をお勧めします。
 
-### Option 1. Azure AI Studio or Azure ML Studio
-Create your compute instance. For code development, we recommend `Standard_DS11_v2` (2 cores, 14GB RAM, 28GB storage, No GPUs).
+### オプション1.Azure AI Studio または Azure ML Studio
+コンピューティング インスタンスを作成します。 コード開発には、`Standard_DS11_v2`(2コア、14GBのRAM、28GBのストレージ、GPUなし)をお勧めします。 
 
-If you want to use the Unstructured toolkit for processing a complex PDF, please be sure to include `startup_unstructured.sh` in your instance startup script.
+複雑なPDFの処理に非構造化ツールキットを使用する場合は、インスタンスの起動スクリプトに`startup_unstructured.sh`を必ず含めてください。 
 
-### Option 2. GitHub Codespace
-Please start a new project by connecting to Codespace Project. The environment required for hands-on is automatically configured through devcontainer, so you only need to run a Jupyter notebook.
+### オプション2.GitHub Codespace
+Codespace Project に接続して、新しいプロジェクトを開始してください。 ハンズオンに必要な環境は devcontainer を通じて自動的に構成されるため、Jupyter Notebook を実行するだけで済みます。
 
-### Option 3. Your local PC
-Please start by installing the required packages on your local PC with `cd .. && pip install -r requirements.txt`
+### オプション3.ローカル PC
+まず、必要なパッケージをローカルPCにインストールしてください。`cd .. && pip install -r requirements.txt`
 
-## 2. Overview
+## 2. 概要
 
-### Why we need Synthetic data?
+### なぜ合成データが必要なのですか?
 
-Synthetic data may not always be necessary, but it can be crucial in certain cases. It allows for scalable dataset generation without privacy concerns, reduces time spent on manual labeling, enables the simulation of new scenarios, and helps retrain models to counteract data drift or introduce updated information.
+合成データは必ずしも必要ではありませんが、場合によっては重要になることがあります。 これにより、プライバシーを懸念することなくスケーラブルなデータセット生成が可能になり、手動のラベリングに費やす時間が短縮され、新しいシナリオのシミュレーションが可能になり、データドリフトを打ち消したり更新された情報を導入したりするためのモデルの再トレーニングに役立ちます。
 
-- **Scalable**: Many real-world tasks, especially those involving machine learning, require vast amounts of data to achieve optimal performance. Synthetic data enables scaling by generating large datasets without the cost or time constraints of collecting real-world data.
-- **Privacy and Safety**: Using real data often involves handling sensitive information, which can raise privacy and security concerns. Synthetic data eliminates these issues by creating artificial data that mirrors the structure of real data without compromising sensitive details.
-- **Labeling**: Manually labeling large datasets is a labor-intensive and time-consuming process. Synthetic data can come pre-labeled, drastically reducing the time and effort needed for human annotation while ensuring consistency.
-- **Pre-assessing**: Synthetic data allows for simulating new or rare scenarios that may not be well-represented in real datasets. This enables better testing and validation of models before deploying them in real-world situations.
-- **Retraining**: Over time, models can become outdated due to data drift or new trends. Synthetic data provides an efficient way to retrain models, ensuring they stay up-to-date without the need for continuously collecting fresh real-world data.
+- **スケーラブル**: 多くの現実世界のタスク、特に機械学習に関連するタスクでは、最適なパフォーマンスを実現するために大量のデータが必要です。 合成データは、実世界のデータを収集するコストや時間の制約なしに、大規模なデータセットを生成することでスケーリングを可能にします。 
+- **プライバシーと安全性**: 実際のデータを使用するには、機密情報の取り扱いが含まれることが多く、プライバシーやセキュリティ上の懸念が生じる可能性があります。 合成データは、機密性の高い詳細を損なうことなく、実際のデータの構造を反映した人工データを作成することで、これらの問題を解消します。 
+- **ラベリング**: 大規模なデータセットに手動でラベルを付けるのは、手間と時間のかかるプロセスです。 合成データには事前にラベルが付けられているため、一貫性を確保しながら、人間によるアノテーションに必要な時間と労力を大幅に削減できます。 
+- **事前評価**: 合成データを使用すると、実際のデータセットでは十分に表現されない可能性のある新しいシナリオや珍しいシナリオをシミュレートできます。 これにより、モデルを実際の状況にデプロイする前に、モデルのテストと検証をより適切に行うことができます。 
+- **再トレーニング**: 時間の経過とともに、データのドリフトや新しい傾向により、モデルが古くなる可能性があります。 合成データは、モデルを再トレーニングする効率的な方法を提供し、新しい実世界のデータを継続的に収集することなく、モデルを最新の状態に保ちます。 
 
-### Baseline decision tree
+### ベースライン決定木
 
-![decision-tree](./imgs/synthetic_data_decision_tree.png)
+![デシジョンツリー](./imgs/synthetic_data_decision_tree.png)
 
-This diagram represents a decision-making process for generating and using synthetic data in a machine learning context, depending on data availability and priorities like privacy and performance.
-When you lack a set of pertinent source data but still need to create something plausible for your task
+この図は、データの可用性とプライバシーやパフォーマンスなどの優先順位に応じて、機械学習のコンテキストで合成データを生成して使用するための意思決定プロセスを表しています。
+関連するソースデータのセットが不足しているが、それでもタスクに適したものを作成する必要がある場合
 
-- **Recommended Baseline**:
-    - The process begins by determining whether the user owns sufficient ground truth data. If the user has relevant source data, they can proceed with **Option 1: Generating Seed Data**. This involves taking raw data and feeding it into an Azure OpenAI model to produce a **Coverage Dataset (Seed)**. This is useful when you have a collection of relevant source data.
-    - If users lack a set of pertinent source data but still need to create something plausible for their task, they can proceed with **Option 2: Generating Personas**, which utilize **GLAN (Generalized Instruction Tuning)** (a specific method for generating data developed by Microsoft).
-    - There is an additional **Optional 3** step, which involves using a **Multi-agent system (AutoGen)**. This step helps simulate complex interactions and scenarios, which could be useful for tasks like simulating interactions between agents in environments like Microsoft Orca or AgentInstruct.
-- **Task Decomposition**:
-    - The output from these baseline steps (Coverage Dataset, Personas, etc.) enters a **Task Decomposition** phase, where the specific data needs and considerations are evaluated.
-- **Privacy or Performance Priority**:
-    - Next, the decision-making process asks if privacy is more important than performance:
-        - **If privacy is prioritized**:
-            - **Approach A**: Use **DP-SGD** (Differentially Private Stochastic Gradient Descent) to create a differentially private fine-tuned model from an open-source model.
-            - **Approach B**: Utilize **Private Evolution**, starting from an OpenAI model and leveraging **DP Few-shot** learning to ensure privacy while fine-tuning.
-        - **If performance is prioritized**:
-            - Use the **Evolve-Instruct** approach, which takes state-of-the-art models (SOTA models) and refines them while maintaining **Privacy Assurance** during training.
+- **推奨ベースライン**:
+    - このプロセスは、ユーザーが十分なグラウンドトゥルースデータを所有しているかどうかを判断することから始まります。 ユーザーが関連するソース データを持っている場合は、**オプション 1: シード データの生成** に進むことができます。 これには、生データを取得し、それを Azure OpenAI モデルにフィードして **カバレッジ データセット (シード)** を生成することが含まれます。 これは、関連するソース データのコレクションがある場合に便利です。 
+    - ユーザーが関連するソース データのセットを欠いているが、タスクに適したものを作成する必要がある場合は、**GLAN (Generalized Instruction Tuning)** (Microsoft が開発したデータを生成するための特定の方法) を利用する **オプション 2: ペルソナの生成** に進むことができます。 
+    - 追加の**オプション3**ステップがあり、これには**マルチエージェントシステム（AutoGen））の使用が含まれます。 この手順は、複雑な対話とシナリオをシミュレートするのに役立ち、Microsoft Orca や AgentInstruction などの環境でのエージェント間の対話をシミュレートするなどのタスクに役立つ場合があります。 
+- **タスクの分解**:
+    - これらのベースラインステップ(カバレッジデータセット、ペルソナなど)からの出力は、特定のデータニーズと考慮事項が評価される**タスク分解**フェーズに入ります。 
+- **プライバシーまたはパフォーマンスの優先**:
+    - 次に、意思決定プロセスでは、プライバシーがパフォーマンスよりも重要であるかどうかを尋ねます。
+        - **プライバシーを優先する場合**:
+            - **アプローチA**:**DP-SGD**(Differentially Private Stochastic Gradient Descent)を使用して、オープンソースモデルから微分プライベートな微調整モデルを作成します。
+            - **アプローチB**:OpenAIモデルから始めて、**DP Few-shot**学習を活用して、微調整しながらプライバシーを確保する**Private Evolution**を活用します。 
+        - **パフォーマンスを優先する場合**:
+            - **Evolve-Instruct** アプローチを使用して、最先端のモデル (SOTA モデル) を取り入れ、トレーニング中に **プライバシー保証** を維持しながらそれらを改良します。 
 
-This flowchart thus guides users through a structured approach to synthetic data generation and model fine-tuning, balancing privacy and performance based on available resources and goals.
+したがって、このフローチャートは、合成データの生成とモデルの微調整、利用可能なリソースと目標に基づいてプライバシーとパフォーマンスのバランスをとるための構造化されたアプローチを通じてユーザーをガイドします。
 
-## 3. Scenario
+## 3.シナリオ
 
-We aims to enhance the model's performance by fine-tuning/RAG (Retrieval-Augmented Generation), providing a high-quality dataset. However, no pre-existing dataset is provided; we only have unprocessed raw data in formats such as PDF, CSV, and TXT. This raw data consists of a mixture of images, tables, and text.
+fine-tuning/RAG(Retrieval-Augmented Generation)によりモデルの性能向上を図り、高品質なデータセットを提供します。 ただし、既存のデータセットは提供されません。 PDF、CSV、TXTなどの形式の未処理の生データのみがあります。 この生データは、画像、表、テキストの組み合わせで構成されています。
 
-### 3.1. Constructing a coverage dataset (seed data) 
-The task is to preprocess and convert this heterogeneous data into a structured format suitable for fine-tuning or RAG. This involves extracting and cleaning text from various file formats, converting tables and images to text using Azure AI Services if necessary. This dataset is used as a seed dataset for fine tuning or RAG and is used as a baseline to improve the performance of domain-specific use cases.
+### 3.1.カバレッジデータセット(シードデータ)の構築
+タスクは、この異種データを前処理し、微調整またはRAGに適した構造化形式に変換することです。 これには、さまざまなファイル形式からのテキストの抽出とクリーニング、必要に応じて Azure AI Services を使用したテーブルと画像のテキストへの変換が含まれます。 このデータセットは、微調整やRAGのシードデータセットとして使用され、ドメイン固有のユースケースのパフォーマンスを向上させるためのベースラインとして使用されます。
 
-### 3.2. Data Augmentation (Optional)
-After fine-tuning with the generated dataset, a baseline was established, but the performance requires improvement due to lack of data (e.g., there are only 1,000 samples in the dataset). In this case, a synthetic dataset must be created by applying data augmentation techniques to enhance performance. The data augmentation technique utilizes the representative techniques announced by Microsoft: Evol-Instruct, GLAN (Generalized Instruction Tuning), and Auto Evol-Insruct.
+### 3.2.データ拡張(オプション)
+生成されたデータセットで微調整を行った結果、ベースラインが確立されましたが、データが不足している(データセットにサンプルが1,000個しかないなど)ため、パフォーマンスの改善が必要です。 この場合、パフォーマンスを向上させるために、データ拡張手法を適用して合成データセットを作成する必要があります。 データ拡張手法は、マイクロソフトが発表した代表的な手法であるEvol-Instruct、GLAN(Generalized Instruction Tuning)、およびAuto Evol-Insructを利用しています。
 
-### 3.3. Customer application examples
-Below is a comparison of the results before and after fine tuning of GPT-4o without RAG for customer PoC. GPT-4o is available to a small number of customers as a private preview as of July 2024. This is the result of creating a set of 16 questions and answers for PoC and comparing three indicators of **Similarity, Coherence, and Fluency** in Azure AI studio. The values ​​of the indicator are on a scale of 1-5, with higher values ​​being better.
+### 3.3.お客様のアプリケーション例
+以下は、顧客PoCのためのGPT-4oのRAGなしの微調整前と後の結果の比較です。 GPT-4o は、2024 年 7 月現在、プライベート プレビューとして一部のお客様にご利用いただけます。 これは、PoC の 16 の質問と回答のセットを作成し、Azure AI Studio で **類似性、一貫性、流暢性** の 3 つのインジケーターを比較した結果です。 指標の値は1〜5のスケールで、値が高いほど優れています。 
 
-![evaluation-sample](./imgs/evaluation-sample.png)
+![評価サンプル](./imgs/evaluation-sample.png)
 
-## 4. Contents
+## 4. コンテンツ
 
-### 4.1. Constructing a coverage dataset (seed data) 
-![diagram1](./imgs/diagram1.png)
+### 4.1.カバレッジデータセット(シードデータ)の構築
+![図1](./imgs/diagram1.png)
 
-Convert the given raw data into data that can be used for model training/RAG/evaluation using Azure OpenAI GPT-4o. `make_qa_multimodal_pdf_docai.ipynb` is most recommended. However, if you feel that the logic of this code is complicated, or if your file content consists only of images or text, please try looking at other Jupyter notebooks first.
-Run the Jupyter notebook in the **[seed](seed)** folder.
+与えられた生データを、Azure OpenAI GPT-4o を使用したモデルのトレーニング/RAG/評価に使用できるデータに変換します。 `make_qa_multimodal_pdf_docai.ipynb`が最も推奨されます。 ただし、このコードのロジックが複雑だと感じた場合や、ファイルの内容が画像やテキストのみで構成されている場合は、まず他の Jupyter Notebook を試してみてください。
+Jupyter ノートブックを **[seed](seed)** フォルダーで実行します。 
 
-#### PDF
-- `make_qa_multimodal_pdf_docai.ipynb`: (Recommended) Generate QnA synthetic dataset from a Complex PDF using Azure AI Document Intelligence.
-- `make_qa_multimodal_pdf_oss.ipynb`:  Generate QnA synthetic dataset from a Complex PDF using Open source (Unstructured toolkit for this hands-on). To run this file, you first need to install the required packages with `startup_unstructured.sh`. The installation will take a few minutes.
-- `make_qa_only_image_multiple_pdf.ipynb`: Generate QnA synthetic dataset from multiple PDFs - Image-heavy PDF.
-- `make_qa_only_image_pdf.ipynb`: Generate QnA synthetic dataset from a PDF - Image-heavy PDF.
+#### PDFで見る
+- `make_qa_multimodal_pdf_docai.ipynb`: (推奨) Azure AI Document Intelligence を使用して、複雑な PDF から QnA 合成データセットを生成します。
+- `make_qa_multimodal_pdf_oss.ipynb`: オープンソースを使用して、複雑なPDFからQnA合成データセットを生成します(このハンズオン用の非構造化ツールキット)。 このファイルを実行するには、まず必要なパッケージを `startup_unstructured.sh` でインストールする必要があります。 インストールには数分かかります。 
+- `make_qa_only_image_multiple_pdf.ipynb`: 複数の PDF から QnA 合成データセットを生成します - 画像の多い PDF。
+- `make_qa_only_image_pdf.ipynb`: PDF から QnA 合成データセットを生成します - 画像の多い PDF。
 
-#### CSV
-- `make_qa_csv.ipynb`: This is the general case. It is not difficult to create a QnA dataset by reading and chunking with CSVLoader.
+#### CSVファイル
+- `make_qa_csv.ipynb`: 一般的なケースです。 CSVLoader で読み取ってチャンクすることで QnA データセットを作成することは難しくありません。
 
-### 4.2. Data Augmentation (Optional)
-Leverage Microsoft's research to generate more high-quality and complex data. Once you have established a baseline in Stage 1, experiment with this step for even better results. By utilizing the concepts of Evolve-Instruct and GLAN, you can fine tune into your LLM specialized for a specific industry/technology domain.
+### 4.2.データ拡張(オプション)
+Microsoft の研究を活用して、より高品質で複雑なデータを生成します。 ステージ 1 でベースラインを確立したら、このステップを試して、さらに良い結果を得てください。 Evolve-InstructとGLANの概念を活用することで、特定の業界/技術領域に特化したLLMを微調整することができます。
 
-#### 4.2.1. [Evolve-Instruct](evolve-instruct/README.md)
+#### 4.2.1. [Evolve-Instruct (進化指示)](evolve-instruct/README.md)
 
-![diagram2](./imgs/diagram2.png)
+![図2](./imgs/diagram2.png)
 
-We can perform data augmentation based on the seed dataset created in Stage 1. Please see **[evolve-instruct/README](evolve-instruct/README.md)** for more details.
+Stage 1で作成したシードデータセットに基づいてデータ拡張を行うことができます。 詳細については、**[evolve-instruct/README](evolve-instruct/README.md)** をご覧ください。 
 
-#### 4.2.2. [GLAN (Generalized Instruction Tuning)](glan-instruct/README.md)
+#### 4.2.2.GLAN[ (Generalized Instruction Tuning) (一般化命令チューニング)](glan-instruct/README.md)
 
-![diagram3](./imgs/diagram3.png)
+![図3](./imgs/diagram3.png)
 
-GLAN can be performed independently without the need to go through Stage 1. This is because it covers all generalized domains. Please see **[glan-instruct/README](glan-instruct/README.md)** for more details.
+GLANは、ステージ1を経ることなく、独立して実行できます。 これは、すべての一般化されたドメインをカバーしているためです。 詳細は [glan-instruct/README](glan-instruct/README.md)** をご覧ください。 

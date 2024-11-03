@@ -7,39 +7,39 @@ has_children: true
 
 # Lab 3. LLMOps for SLM with Azure AI Studio
 
-This E2E example is for users who have just adopted Azure Open AI and want to build an LLM evaluation pipeline with Promptflow for quality assurance from scratch. It introduces the end-to-end processes of experimentation, model quality evaluation, deploying, and performance monitoring with Prompt flow and other tools after fine-tuned LLMs.
+この E2E の例は、Azure Open AI を採用したばかりで、品質保証のための Promptflow を使用して LLM 評価パイプラインをゼロから構築したいユーザー向けです。実験、モデル品質評価、デプロイ、および微調整された LLM 後の Prompt flow やその他のツールを使用したパフォーマンス監視のエンドツーエンドのプロセスを紹介します。
 
-## Overview
+## 概要
 
-In this lab, you will learn how to set up, test, deploy, evaluate and monitor your fine-tuned models in the previous labs following your current use cases. By leveraging Azure AI studio and Prompt flow, you will establish a LLMOps pipeline for deploying and utilizing custom AI models. This E2E example is divided into five scenarios based on the yours current situation:
+このラボでは、現在のユースケースに従って、前のラボで微調整したモデルのセットアップ、テスト、デプロイ、評価、監視の方法を学習します。Azure AI Studio と Prompt フローを活用することで、カスタム AI モデルをデプロイおよび利用するための LLMOps パイプラインを確立します。この E2E の例は、現在の状況に基づいて 5 つのシナリオに分かれています。
 
-**Scenario 1: Set Up Azure AI Studio for LLMOps**
+**シナリオ 1: LLMOps 用に Azure AI Studio を設定する**
 
-**Scenario 2: Basic LLMOps for your first gen AI app with Promptflow**
+**シナリオ 2: Promptflow を使用した第 1 世代 AI アプリの基本的な LLMOps**
 
-**Scenario 3: Evaluate your models using Prompt Flow to keep optimizing**
+**シナリオ 3: プロンプト フローを使用してモデルを評価し、最適化を続ける**
 
-**Scenario 4: Content Safety with Azure AI studio before production** ​
+**シナリオ 4: 運用前に Azure AI Studio を使用したコンテンツの安全性** 
 
-[//]: # (**Scenario 5: Attach Azure API management and Azure Monitor for reliability and monitoring TBD**)
+[//]: # (**シナリオ 5: 信頼性と監視のために Azure API Management と Azure Monitor をアタッチする (未定)**)
 
-[//]: # (**Scenario 6: Service Benchmark and optimization**)
+[//]: # (**シナリオ 6: サービスのベンチマークと最適化**)
 
-[//]: # (**Bonus track: Prompt flow Best Practices**)
+[//]: # (**ボーナストラック:プロンプトフローのベストプラクティス**)
 
-[//]: # (**TODO: Automately translate all contents in Korean using Jekyll**)
+[//]: # (**TODO:Jekyllを使用して韓国語のすべてのコンテンツを自動的に翻訳します**)
 
-[//]: # (**Bonus track: Create Local LangChain project using a CLI version of​ Prompt flow**)
+[//]: # (**ボーナストラック:CLIバージョンのPromptフローを使用してローカルLangChainプロジェクトを作成**)
 
-## 🗑️ Clean up resources
-TBD
+## ️リソースをクリーンアップする
+未定
 
-## Reference
-[LLMOps Prompt flow template github](https://github.com/microsoft/llmops-promptflow-template) 
+## 参考
+[LLMOpsプロンプトフローテンプレートgithub](https://github.com/microsoft/llmops-promptflow-template) 
 
-[GenAIOps github](https://github.com/Azure/GenAIOps)
+[GenAIOpsのgithub](https://github.com/Azure/GenAIOps)
 
-[Phi-3CookBook](https://github.com/microsoft/Phi-3CookBook?wt.mc_id=studentamb_279723)
+[Phi-3クックブック](https://github.com/microsoft/Phi-3CookBook?wt.mc_id=studentamb_279723)
 
 https://github.com/just-the-docs/just-the-docs?tab=readme-ov-file#user-content-fn-2-6204df4f8c0dad5766232d4558ca98cf 
 
@@ -47,4 +47,4 @@ https://serverspace.io/support/help/install-ruby-on-rails-ubuntu-20-04/
 
 https://jekyllrb.com/ 
 
-[//]: # (bundle exec jekyll serve, ctrl+c)
+[//]: # (バンドルエグゼクティブジキルサーブ、Ctrl + C)

@@ -9,36 +9,36 @@ nav_order: 5
 # Lab 2. SLM/LLM Fine-tuning on Azure ML Studio
 {: .no_toc }
 
-## Table of contents
+## 目次
 {: .no_toc .text-delta }
 
-1. TOC
-{:toc}
+1. 目次
+{:目次}
 
 ---
 
-## 1. How to get started 
-1. Create your compute instance. For code development, we recommend `Standard_DS11_v2` (2 cores, 14GB RAM, 28GB storage, No GPUs).
-2. Open the terminal of the CI and run: 
+## 1. 利用開始方法 
+1. コンピューティング インスタンスを作成します。コード開発には、 `Standard_DS11_v2` (2 コア、14 GB RAM、28 GB ストレージ、GPU なし) をお勧めします。
+2. CIのターミナルを開き、次のコマンドを実行します。 
     ```shell
     git clone https://github.com/Azure/slm-innovator-lab.git
     conda activate azureml_py310_sdkv2
     pip install -r requirements.txt
     ```
-3. Choose the model to use for your desired use case.
-    - [Phi-3, Phi-3.5](phi3)
-        - [Option 1. MLflow] Run [`1_training_mlflow.ipynb`](phi3/1_training_mlflow.ipynb) and [`2_serving.ipynb`](phi3/2_serving.ipynb), respectively.
-        - [Option 2. Custom] Run [`1_training_custom.ipynb`](phi3/1_training_custom.ipynb) and [`2_serving.ipynb`](phi3/2_serving.ipynb), respectively.
-        - *(Optional)* If you are interested in LLM dataset preprocessing, see the hands-ons in `phi3/dataset-preparation` folder.
-    - [Florence2-VQA](florence2-VQA)
-        - Run [`1_training_mlflow.ipynb`](florence2-VQA/1_training_mlflow.ipynb) and [`2_serving.ipynb`](florence2-VQA/2_serving.ipynb), respectively.
-    - Don't forget to edit the `config.yml`.
+3. 目的のユースケースに使用するモデルを選択します。
+    - [ファイ-3、ファイ-3.5](phi3)
+        - [オプション1.MLフロー] それぞれ Run [`1_training_mlflow.ipynb`](phi3/1_training_mlflow.ipynb) と [`2_serving.ipynb`](phi3/2_serving.ipynb)を実行します。
+        - [オプション2.習慣] それぞれ Run [`1_training_custom.ipynb`](phi3/1_training_custom.ipynb) と [`2_serving.ipynb`](phi3/2_serving.ipynb)を実行します。
+        - *(オプション)* LLM データセットの前処理に関心がある場合は、フォルダ内のハンズオンを参照してください `phi3/dataset-preparation` 。
+    - [フィレンツェ2-VQA](florence2-VQA)
+        - それぞれ Run [`1_training_mlflow.ipynb`](florence2-VQA/1_training_mlflow.ipynb) と [`2_serving.ipynb`](florence2-VQA/2_serving.ipynb)を実行します。
+    - を編集することを忘れないでください`config.yml`。
 
-## 2. Azure ML Training preparation
+## 2. Azure ML トレーニングの準備
 
-### 2.1. Preliminaries: Azure ML Python SDK v2
+### 2.1. 予備段階: Azure ML Python SDK v2
 
-Azure ML Python SDK v2 is easy to use once you get the hang of it. When an `MLClient` instance is created to manipulate AzureML, the operation corresponding to the asset is executed asynchronously through the `create_or_update function`. Please see code snippets below.
+Azure ML Python SDK v2 は、コツをつかめば簡単に使用できます。 `MLClient` AzureML を操作するためのインスタンスが作成されると、アセットに対応する操作は `create_or_update function`.以下のコードスニペットを参照してください。
 
 ```python
 ml_client = MLClient.from_config(credential)
@@ -67,48 +67,48 @@ ml_client.begin_create_or_update(endpoint)
 ml_client.online_endpoints.begin_create_or_update(endpoint) 
 ```
 
-### 2.2. Data asset
+### 2.2. データ資産
 
-Model training/validation datasets can be uploaded directly locally, or registered as your Azure ML workspace Data asset. Data asset enables versioning of your data, allowing you to track changes to your dataset and revert to previous versions when necessary. This maintains data quality and ensures reproducibility of data analysis.
+モデルのトレーニング/検証データセットは、直接ローカルにアップロードすることも、Azure ML ワークスペースのデータ資産として登録することもできます。データ アセットを使用すると、データのバージョン管理が可能になり、データセットの変更を追跡し、必要に応じて以前のバージョンに戻すことができます。これにより、データ品質が維持され、データ解析の再現性が確保されます。
 
-Data assets are created by referencing data files or directories stored in Datastore. Datastore represents a location that stores external data and can be connected to various Azure data storage services such as Azure Blob Storage, Azure File Share, Azure Data Lake Storage, and OneLake. When you create an Azure ML workspace, four datastores (`workspaceworkingdirectory`, `workspaceartifactstore`, `workspacefilestore`, `workspaceblobstore`) are automatically created by default. Among these, workspaceblobstore is Azure Blob Storage, which is used by default when storing model training data or large files.
+データ アセットは、Datastore に格納されているデータ ファイルまたはディレクトリを参照することによって作成されます。データストアは、外部データを格納する場所を表し、Azure Blob Storage、Azure File Share、Azure Data Lake Storage、OneLake などのさまざまな Azure データ ストレージ サービスに接続できます。Azure ML ワークスペースを作成すると、既定で 4 つのデータストア (`workspaceworkingdirectory`、 `workspaceartifactstore`、 `workspacefilestore`、) `workspaceblobstore`が自動的に作成されます。その中でも、workspaceblobstore は Azure Blob Storage であり、モデル トレーニング データや大きなファイルを格納するときに既定で使用されます。
 
 
-### 2.3. Environment asset
+### 2.3. 環境アセット
 
-Azure ML defines Environment Asset in which your code will run. We can use the built-in environment or build a custom environment using Conda specification or Docker image. The pros and cons of Conda and Docker are as follows.
+Azure ML は、コードが実行される環境資産を定義します。組み込み環境を使用することも、Conda仕様またはDockerイメージを使用してカスタム環境を構築することもできます。CondaとDockerの長所と短所は次のとおりです。
 
-**Conda environment**
+**Conda 環境**
 
-- Advantages
-    - Simple environment setup: The Conda environment file (conda.yml) is mainly used to specify Python packages and Conda packages. The file format is simple and easy to understand, and is suitable for specifying package and version information.
-    - Quick setup: The Conda environment automatically manages dependencies and resolves conflicts, so setup is relatively quick and easy.
-    - Lightweight environment: Conda environments can be lighter than Docker images because they only install specific packages.
-- Disadvantages
-    - Limited flexibility: Because the Conda environment focuses on Python packages and Conda packages, it is difficult to handle more complex system-level dependencies.
-    - Portability limitations: The Conda environment consists primarily of Python and Conda packages, making it difficult to include other languages or more complex system components.
+- 利点
+    - 簡単な環境設定: Conda 環境ファイル (conda.yml) は、主に Python パッケージと Conda パッケージを指定するために使用されます。ファイル形式はシンプルで理解しやすく、パッケージやバージョン情報の指定に適しています。
+    - クイック セットアップ: Conda 環境は依存関係を自動的に管理し、競合を解決するため、セットアップは比較的迅速かつ簡単です。
+    - 軽量環境: Conda 環境は、特定のパッケージのみをインストールするため、Docker イメージよりも軽量になる可能性があります。
+- 欠点
+    - 柔軟性の制限: Conda 環境は Python パッケージと Conda パッケージに重点を置いているため、より複雑なシステムレベルの依存関係を処理することは困難です。
+    - 移植性の制限: Conda 環境は主に Python パッケージと Conda パッケージで構成されているため、他の言語やより複雑なシステム コンポーネントを含めることは困難です。
 
-**Docker environment**
+**Docker環境**
 
-- Advantages
-    - High flexibility: Docker allows you to define a complete environment, including all necessary packages and tools, starting at the operating system level. May contain system dependencies, custom settings, non-Python packages, etc.
-    - Portability: Docker images run the same everywhere, ensuring environment consistency. This significantly improves reproducibility and portability.
-    - Complex environment setup: With Docker, you can set up an environment containing complex applications or multiple services.
-- Disadvantages
-    - Complex setup: Building and managing Docker images can be more complex than setting up a Conda environment. You need to write a Dockerfile and include all required dependencies.
-    - Build time: Building a Docker image for the first time can take a long time, especially if the dependency installation process is complex.
+- 利点
+    - 高い柔軟性: Docker を使用すると、オペレーティング システム レベルから始めて、必要なすべてのパッケージとツールを含む完全な環境を定義できます。システムの依存関係、カスタム設定、Python以外のパッケージなどが含まれる場合があります。
+    - 移植性: Docker イメージはどこでも同じように実行されるため、環境の一貫性が確保されます。これにより、再現性と携帯性が大幅に向上します。
+    - 複雑な環境のセットアップ: Docker を使用すると、複雑なアプリケーションや複数のサービスを含む環境をセットアップできます。
+- 欠点
+    - 複雑なセットアップ: Docker イメージの構築と管理は、Conda 環境のセットアップよりも複雑になる場合があります。Dockerfile を記述し、必要なすべての依存関係を含める必要があります。
+    - ビルド時間: 初めて Docker イメージをビルドするには、特に依存関係のインストール プロセスが複雑な場合、時間がかかることがあります。
 
-In Azure ML, it is important to choose the appropriate method based on the requirements of your project. For simple Python projects, the Conda environment may be sufficient, but if you need complex system dependencies, the Docker environment may be more appropriate. The easiest and fastest way to create a custom Docker image is to make minor modifications to the curated environment. Below is an example.
+Azure ML では、プロジェクトの要件に基づいて適切な方法を選択することが重要です。単純な Python プロジェクトの場合は Conda 環境で十分な場合がありますが、複雑なシステム依存関係が必要な場合は、Docker 環境の方が適している可能性があります。カスタム Docker イメージを作成する最も簡単で最速の方法は、キュレーションされた環境に小さな変更を加えることです。以下はその一例です。
 
-Please select `acft-hf-nlp-gpu` in the curated environment tab. (Of course, you can choose a different environment.)
+ `acft-hf-nlp-gpu` キュレーションされた環境タブで選択してください(もちろん、別の環境を選択することもできます)。
 
-![env1](./images/environment_curated1.png)
+![環境1](./images/environment_curated1.png)
 
-Please copy the `Dockerfile` and `requirements.txt` and modify them as needed.
+と をコピーして `Dockerfile` `requirements.txt` 、必要に応じて変更してください。
 
-![env2](./images/environment_curated2.png)
+![環境2](./images/environment_curated2.png)
 
-The code snippet below is the result of modifying the `Dockerfile`.
+次のコード スニペットは、 `Dockerfile`.
 
 ```Dockerfile
 FROM mcr.microsoft.com/aifx/acpt/stable-ubuntu2004-cu118-py38-torch222:biweekly.202406.2
@@ -125,14 +125,14 @@ RUN python -m nltk.downloader punkt
 RUN MAX_JOBS=4 pip install flash-attn==2.5.9.post1 --no-build-isolation
 ```
 
-## 3. Azure ML Training
+## 3. Azure ML トレーニング
 
-### 3.1. Training Script with MLflow
+### 3.1. MLflow を使用したトレーニングスクリプト
 
-Some people may think that they need to make significant changes to their existing training scripts or that the Mlflow toolkit is mandatory, but this is not true. If you are comfortable with your existing training environment, you don't need to adopt Mlflow. Nevertheless, Mlflow is a toolkit that makes training and deploying models on Azure ML very convenient, so we are going to briefly explain it in this post.
+一部の人々は、既存のトレーニングスクリプトに大幅な変更を加える必要がある、またはMlflowツールキットが必須であると考えるかもしれませんが、これは真実ではありません。既存のトレーニング環境に慣れている場合は、Mlflow を採用する必要はありません。それにもかかわらず、MlflowはAzure MLでのモデルのトレーニングとデプロイを非常に便利にするツールキットであるため、この投稿で簡単に説明します。
 
 
-In the your training script, Use `mlflow.start_run()` to start an experiment in MLflow, and `mlflow.end_run()` to end the experiment when it is finished. Wrapping it in with syntax eliminates the need to explicitly call end_run(). You can perform mlflow logging inside an mlflow block, our training script uses `mlflow.log_params()`, `mlflow.log_metric()`, and `mlflow.log_image()`. For more information, please see [here](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-log-view-metrics?view=azureml-api-2&tabs=interactive).
+トレーニング スクリプトで、 `mlflow.start_run()` MLflow で実験を開始し、 `mlflow.end_run()` 終了時に実験を終了するために使用します。構文でラップすると、明示的に end_run() を呼び出す必要がなくなります。mlflow ブロック内で mlflow ログを実行できます。トレーニング スクリプトでは`mlflow.log_params()`、`mlflow.log_metric()`、 `mlflow.log_image()` 、 を使用します。詳しくは[こちらをご覧ください](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-log-view-metrics?view=azureml-api-2&tabs=interactive)。
 
 ```python
 import mlflow
@@ -170,18 +170,18 @@ with mlflow.start_run() as run:
 ```
 
 {: .warning}
-Some SLMs/LLMs do not support `mlflow.transformers.log_model()`, so we recommend you save the model with the traditional `save_pretrained()`.
+一部の SLM/LLM は をサポートしていない `mlflow.transformers.log_model()`ため、モデルを従来の `save_pretrained()`.
 
 ```python
 model.save_pretrained(model_dir)
 processor.save_pretrained(model_dir)
 ```
 
-### 3.2. Create a Compute Cluster and Training Job
+### 3.2. 計算クラスターとトレーニングジョブの作成
 
-Once you have finished writing and debugging the training script, you can create a training job. As a baseline, you can use `Standard_NC24ads_A100_v4` with one NVIDIA A100 GPU. Provisioning a LowPriority VM costs just $0.74 per hour in the US East region in Sep. 2024.
+トレーニングスクリプトの記述とデバッグが完了したら、トレーニングジョブを作成できます。基本的には、 `Standard_NC24ads_A100_v4` NVIDIA A100 GPUを1台搭載してご使用いただけます。2024 年 9 月の米国東部リージョンでの LowPriority VM のプロビジョニングのコストは、1 時間あたりわずか $0.74 です。
 
-The `command()` function is one of the Azure ML main functions used to define and run training tasks. This function specifies the training script and its required environment settings, and allows the job to be run on Azure ML's compute resources.
+この `command()` 関数は、トレーニング タスクの定義と実行に使用される Azure ML のメイン関数の 1 つです。この関数は、トレーニング スクリプトとその必要な環境設定を指定し、Azure ML のコンピューティング リソースでジョブを実行できるようにします。
 
 ```python
 from azure.ai.ml import command
@@ -211,38 +211,38 @@ returned_job = ml_client.jobs.create_or_update(job)
 ml_client.jobs.stream(returned_job.name)
 ```
 
-### 3.3. Check your Training job
+### 3.3. トレーニングジョブを確認する
 
-Check whether model training is progressing normally through Jobs Asset.
+Jobs Assetを通じて、モデルの学習が正常に進行しているか確認します。
 
-1. **Overview** tab allows you to view your overall training history. Params are parameters registered in` mlflow.log_params()` in our training script.
+1. **「概要**」タブでは、全体的なトレーニング履歴を表示できます。パラメータ は、` mlflow.log_params()`トレーニング スクリプトに登録されているパラメータです。
 
 ![train_job_overview](./images/train_job_overview.png)
 
-2. **Metrics** tab allows you to view the metrics registered with `mlflow.log_metric()` at a glance.
+2. **「メトリクス」**タブでは、登録したメトリクスを `mlflow.log_metric()` 一目で確認することができます。
 
 ![train_job_metrics](./images/train_job_metrics.png)
 
-3. **Images** tab allows you to view images saved with `mlflow.log_image()`. We recommend that you save the inference results as an image to check whether the model training is progressing well.
+3. **[画像** ] タブでは、. `mlflow.log_image()`推論結果を画像として保存して、モデルの学習が順調に進んでいるかどうかを確認することをお勧めします。
 
 ![train_job_images](./images/train_job_images.png)
 
-4. **Outputs + log**s tab checks and monitors your model training infrastructure, containers, and code for issues.
-    - `system_logs` folder records all key activities and events related to the Training cluster, data assets, hosted tools, etc.
-    - `user_logs` folder mainly plays an important role in storing logs and other files created by users within the training script, increasing transparency of the training process and facilitating debugging and monitoring. This allows users to see a detailed record of the training process and identify and resolve issues when necessary.
+4. **[出力 + ログ**] タブでは、モデル トレーニング インフラストラクチャ、コンテナー、およびコードの問題を確認および監視します。
+    - `system_logs` フォルダーには、トレーニングクラスター、データアセット、ホストツールなどに関連するすべての主要なアクティビティとイベントが記録されます。
+    - `user_logs` フォルダは主に、トレーニングスクリプト内でユーザーが作成したログやその他のファイルを保存する上で重要な役割を果たし、トレーニングプロセスの透明性を高め、デバッグと監視を容易にします。これにより、ユーザーはトレーニングプロセスの詳細な記録を確認し、必要に応じて問題を特定して解決できます。
 
 ![train_job_logs](./images/train_job_logs.png)
 
-## 4. Azure ML Serving
-Once the model training is complete, let's deploy it to the hosting server. If you saved it with MLflow `log_model()`, you can deploy it directly with Mlflow, but in the current transformer and mlflow version, we used the traditional way of saving the model, so we need to deploy it with the custom option.
+## 4. Azure ML の提供
+モデルのトレーニングが完了したら、ホスティング サーバーにデプロイしましょう。MLflowで保存した場合は `log_model()`、Mlflowで直接デプロイできますが、電流トランスフォーマーとmlflowバージョンでは、モデルを保存する従来の方法を使用したため、カスタムオプションを使用してデプロイする必要があります。
 
-### 4.1. Inference script
+### 4.1. 推論スクリプト
 
-You only need to define two functions, `init()` and `run()`, and write them freely. Although you cannot pass arguments to the init() function directly, you can pass the necessary information during initialization through environment variables or configuration files.
+2つの関数と、`init()`を定義し`run()`、自由に書くだけです。init() 関数に直接引数を渡すことはできませんが、初期化中に環境変数または設定ファイルを通じて必要な情報を渡すことができます。
 
-### 4.2. Register Model
+### 4.2. モデルの登録
 
-Register with the Model class of `azure.ai.ml.entities`. Enter the model's path and name when registering and use with `ml_client.models.create_or_update()`.
+の Model クラスで登録します `azure.ai.ml.entities`。で登録して使用するときにモデルのパスと名前を入力します `ml_client.models.create_or_update()`。
 
 ```python
 def get_or_create_model_asset(ml_client, model_name, job_name, model_dir="outputs", model_type="custom_model", update=False):
@@ -269,9 +269,9 @@ def get_or_create_model_asset(ml_client, model_name, job_name, model_dir="output
     return model_asset
 ```
 
-### 4.3. Environment asset
+### 4.3. 環境アセット
 
-This is the same as the Environment asset introduced in the previous section. However, model serving requires additional settings for web hosting, so please refer to the code snippet below.
+これは、前のセクションで紹介した環境アセットと同じです。ただし、モデルサービングにはウェブホスティングの追加設定が必要なため、以下のコードスニペットを参照してください。
 
 ```Dockerfile
 FROM mcr.microsoft.com/aifx/acpt/stable-ubuntu2004-cu118-py38-torch222:biweekly.202406.2
@@ -298,16 +298,16 @@ RUN apt-get update
 RUN apt-get install -y openssh-server openssh-client
 ```
 
-### 4.4. Create an Endpoint
+### 4.4. エンドポイントの作成
 
-An endpoint refers to an HTTP(S) URL that makes the model accessible from the outside. Endpoint can have multiple deployments, which allows traffic to be distributed across multiple deployments. Endpoint does the following:
+エンドポイントとは、モデルを外部からアクセス可能にする HTTP(S) URL を指します。エンドポイントは複数のデプロイメントを持つことができるため、トラフィックを複数のデプロイメントに分散できます。エンドポイントは、次のことを行います。
 
-- **API interface provided**: Endpoint provides a URL to receive model prediction requests through a RESTful API.
-- **Traffic routing**: Endpoint distributes traffic across multiple deployments. This allows you to implement A/B testing or canary deployment strategies.
-- **Scalability**: Endpoint supports scaling across multiple deployments and can be load balanced across additional deployments as traffic increases.
-- **Security Management**: Endpoints secure models through authentication and authorization. You can control access using API keys or Microsoft Entra ID.
+- **提供されるAPIインターフェース**:エンドポイントは、RESTful APIを介してモデル予測リクエストを受信するためのURLを提供します。
+- **トラフィック ルーティング**: エンドポイントは、トラフィックを複数のデプロイに分散します。これにより、A/B テストまたはカナリア デプロイ戦略を実装できます。
+- **スケーラビリティ**: エンドポイントは、複数のデプロイ間でのスケーリングをサポートし、トラフィックの増加に応じて追加のデプロイ間で負荷分散できます。
+- **セキュリティ管理**: エンドポイントは、認証と承認を通じてモデルを保護します。API キーまたは Microsoft Entra ID を使用してアクセスを制御できます。
 
-The code snippet is below. Note that this process does not provision a compute cluster yet.
+コード スニペットを次に示します。このプロセスでは、まだ計算クラスターがプロビジョニングされないことに注意してください。
 
 ```python
 from azure.ai.ml.entities import (
@@ -337,15 +337,15 @@ except Exception as err:
     ) from err
 ```
 
-### 4.5. Create a Deployment
+### 4.5. デプロイメントの作成
 
-Deployment is the instance that actually run the model. Multiple deployments can be connected to an endpoint, and each deployment contains a model, environment, compute resources, infrastructure settings, and more. Deployment does the following:
+デプロイは、モデルを実際に実行するインスタンスです。複数のデプロイをエンドポイントに接続でき、各デプロイにはモデル、環境、コンピューティング リソース、インフラストラクチャ設定などが含まれます。デプロイメントでは、次の処理が行われます。
 
-- **Manage resources**: The deployment manages the computing resources needed to run the model. You can set up resources like CPU, GPU, and memory.
-- **Versioning**: Deployments can manage different versions of a model. This makes it easy to roll back to a previous version or deploy a new version.
-- **Monitoring and logging**: We can monitor the logs and performance of running models. This helps you detect and resolve issues.
+- **リソースの管理**: デプロイでは、モデルの実行に必要なコンピューティング リソースが管理されます。CPU、GPU、メモリなどのリソースを設定できます。
+- **バージョン管理**: デプロイでは、モデルのさまざまなバージョンを管理できます。これにより、以前のバージョンにロールバックしたり、新しいバージョンをデプロイしたりすることが容易になります。
+- **監視とロギング**:実行中のモデルのログとパフォーマンスを監視できます。これにより、問題を検出して解決できます。
 
-The code snippet is below. Note that this takes a lot of time as a GPU cluster must be provisioned and the serving environment must be built.
+コード スニペットを次に示します。GPU クラスターをプロビジョニングし、サービス環境を構築する必要があるため、これには多くの時間がかかることに注意してください。
 
 ```python
 from azure.ai.ml.entities import (    
@@ -397,4 +397,4 @@ endpoint_poller = ml_client.online_endpoints.begin_create_or_update(endpoint)
 ```
 
 {: .note}
-Please specify and deploy the liveness probe settings directly to check if the model deployment container is running normally. When debugging, it is recommended to set a high initial_delay and a high failure_threshold and high period for error log analysis. Please check `ProbeSettings()` in the code above.
+liveness probe の設定を直接指定してデプロイし、モデルデプロイコンテナが正常に動作しているか確認してください。デバッグ時には、エラー ログ分析のために、高いinitial_delayと高いfailure_thresholdと高い周期を設定することをお勧めします。 `ProbeSettings()` 上記のコードを確認してください。

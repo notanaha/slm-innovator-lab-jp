@@ -7,113 +7,113 @@ nav_order: 2
 # Background. Why Azure and Fine-tuning?
 {: .no_toc }
 
-## Table of contents
+## 目次
 {: .no_toc .text-delta }
 
-1. TOC
-{:toc}
+1. 目次
+{:目次}
 
 ---
 
-## 1. Why Fine-tuning is Necessary 
+## 1. なぜファインチューニングが必要なのか 
 
-### 1.1. Overview
-**Fine-tuning** has become increasingly important for several reasons, though it is not always a mandatory technique. Here is why fine-tuning is gaining traction:
+### 1.1. 概要
+**微調整は** 、いくつかの理由でますます重要になっていますが、必ずしも必須の手法ではありません。ここでは、ファインチューニングが注目を集めている理由をご紹介します。
 
-1. **Addressing LLM/Prompt Drift**: Large language models (LLMs) can suffer from performance degradation over time (LLM drift[^1]) or inconsistent outputs (prompt drift[^2]). Fine-tuning helps mitigate these issues by tailoring models to specific tasks, ensuring more stable and reliable outputs.
-2. **Improved Performance**: Fine-tuning allows for better performance on specific tasks or datasets, often outperforming general models like GPT-3.5 in niche areas (e.g., multilingual tasks). For example, Microsoft Phi-3-5-MoE-Instruct beats GPT-3.5-Turbo-0613 on all metrics in the multiple-choice task such as KMMLU, KMMLU-HARD, CLIcK (Cultural and Linguistic Intelligence in Korean), and HAE_RAE_BENCH 1.0.[^3]
- It customizes models to align with domain-specific requirements, leading to enhanced accuracy.
-3. **Cost and Efficiency**: Fine-tuned models are optimized for the specific tasks at hand, leading to lower computational costs and faster inference times compared to deploying large, general-purpose models.
-4. **Customization for Business Needs**: General-purpose models often fall short in handling industry-specific use cases. Fine-tuning enables businesses to tailor models for their unique workflows, leading to better results and improved customer interactions.
-5. **Parallel with RAG (Retrieval-Augmented Generation)**: While fine-tuning is increasingly used, it’s often evaluated alongside RAG, a technique that enhances model performance by retrieving relevant information in real-time. Businesses are exploring both methods to decide which best suits their needs. Fine-tuning focuses on refining the model itself, while RAG complements by providing contextually relevant data during generation.
+1. **LLM/プロンプトドリフトへの対処**: 大規模言語モデル (LLM) は、時間の経過に伴うパフォーマンスの低下 (LLM ドリフト[^1]) や一貫性のない出力 (プロンプトドリフト)[^2] に悩まされる可能性があります。微調整は、モデルを特定のタスクに合わせて調整することでこれらの問題を軽減し、より安定した信頼性の高い出力を確保するのに役立ちます。
+2. **パフォーマンスの向上**: 微調整により、特定のタスクやデータセットでパフォーマンスが向上し、多くの場合、ニッチな領域 (多言語タスクなど) では GPT-3.5 などの一般的なモデルよりも優れたパフォーマンスを発揮します。たとえば、Microsoft Phi-3-5-MoE-Instruct は、KMMLU、KMMLU-HARD、CLIcK (韓国語の文化的および言語的知性)、HAE_RAE_BENCH 1.0 などの多肢選択タスクのすべてのメトリックで GPT-3.5-Turbo-0613 を上回っています。[^3]
+ ドメイン固有の要件に合わせてモデルをカスタマイズし、精度の向上につながります。
+3. **コストと効率**: 微調整されたモデルは、手元の特定のタスクに合わせて最適化されているため、大規模な汎用モデルをデプロイする場合と比較して、計算コストが低く、推論時間が短縮されます。
+4. **ビジネスニーズに合わせたカスタマイズ**:汎用モデルは、業界固有のユースケースの処理に不十分な場合がよくあります。微調整により、企業は独自のワークフローに合わせてモデルを調整でき、より良い結果と顧客との対話の改善につながります。
+5. **RAG(Retrieval-Augmented Generation)との並行**: 微調整の使用が増加する一方で、関連情報をリアルタイムで取得することでモデルのパフォーマンスを向上させる手法であるRAGと一緒に評価されることがよくあります。企業は、どちらがニーズに最も適しているかを決定するために、両方の方法を模索しています。ファインチューニングはモデル自体の改良に重点を置いていますが、RAGは生成中にコンテキストに関連するデータを提供することで補完します。
 
-Let's take a closer look at this from a LLMOps, Business, and Technical perspective.
+これを LLMOps、ビジネス、および技術の観点から詳しく見てみましょう。
 
-### 1.2. Evaluation-Driven Development in LLMOps
-![why-ft1](images/why-ft1.png)
+### 1.2. LLMOpsでの評価駆動型開発
+![なぜ-FT1](images/why-ft1.png)
 
-- **Initial Hypothesis Building**:
-    - At the beginning of the pipeline, business use cases are evaluated to build an initial hypothesis. This hypothesis is created by evaluating both **SLMs** and **LLMs** to determine which model fits the problem best.
-    - By using data and benchmarks, teams can objectively assess whether an LLM is suitable, saving resources before committing to a full-scale implementation.
-- **Iterative Optimization through Fine-Tuning**:
-    - Once a model is chosen, it goes through **fine-tuning** and prompt flow variations, and these variations are evaluated after each iteration. This evaluation-driven cycle helps ensure that the fine-tuning process is not just guesswork but based on data and performance metrics from each iteration.
-    - Teams evaluate models against benchmarks, adjusting parameters or retraining the model until performance goals are met.
-- **Prompt Flow[^4] Evaluation**:
-    - Part of the evaluation-driven approach involves testing different **prompt flows**—a method of breaking down tasks into different nodes or components. Each prompt node’s output is evaluated to understand how well the model is performing at each step of the prompt chain, allowing for precise adjustments to individual tasks.
-    - This targeted evaluation ensures that prompt design can be optimized in detail, further improving the model’s performance.
-- **Benchmarking for Continuous Feedback**:
-    - Evaluation in LLMOps is not a one-time step but a continuous process. After each cycle of optimization or fine-tuning, the model is benchmarked against a dataset to measure improvements or regressions in performance.
-    - This constant feedback loop allows the team to make data-driven decisions, refining the model further or, in some cases, pivoting to a new strategy if the current approach is underperforming.
-- **Deployment and Monitoring**:
-    - Even after deployment, **monitoring** becomes part of the evaluation-driven process. The deployed model is continuously evaluated for **LLM drift** (accuracy loss over time) or **prompt drift** (inconsistent prompt outputs).
-    - This allows organizations to react swiftly when model performance declines, triggering new iterations of fine-tuning and evaluation to correct any issues.
+- **初期仮説の構築**:
+    - パイプラインの開始時に、ビジネスユースケースが評価され、初期仮説が立てられます。この仮説は、**SLM** と **LLM** の両方を評価して、どちらのモデルが問題に最も適合するかを判断することによって作成されます。
+    - データとベンチマークを使用することで、チームはLLMが適切かどうかを客観的に評価でき、本格的な実装に取り組む前にリソースを節約できます。
+- **微調整による反復的な最適化**:
+    - モデルが選択されると、 **微調整** と迅速なフローのバリエーションが行われ、これらのバリエーションは各反復後に評価されます。この評価主導のサイクルにより、微調整プロセスが単なる推測ではなく、各イテレーションのデータとパフォーマンス メトリックに基づいていることを確認できます。
+    - チームは、パフォーマンス目標が達成されるまで、ベンチマークに対してモデルを評価し、パラメーターを調整したり、モデルを再トレーニングしたりします。
+- **プロンプトフロー[^4] 評価**:
+    - 評価主導型アプローチの一部には、さまざまな **プロンプトフロー**のテスト(タスクをさまざまなノードまたはコンポーネントに分割する方法)が含まれます。各プロンプト・ノードの出力が評価され、プロンプト・チェーンの各ステップでモデルがどの程度うまく機能しているかが理解され、個々のタスクを正確に調整できます。
+    - この的を絞った評価により、プロンプト設計を詳細に最適化し、モデルのパフォーマンスをさらに向上させることができます。
+- **継続的なフィードバックのためのベンチマーク**:
+    - LLMOpsでの評価は、1回限りのステップではなく、継続的なプロセスです。最適化または微調整の各サイクルの後、モデルはデータセットに対してベンチマークされ、パフォーマンスの改善または回帰が測定されます。
+    - この絶え間ないフィードバックループにより、チームはデータドリブンな意思決定を行い、モデルをさらに改良したり、場合によっては現在のアプローチのパフォーマンスが低い場合は新しい戦略に軸足を移すことができます。
+- **デプロイメントとモニタリング**:
+    - デプロイ後も、**監視**は評価主導のプロセスの一部になります。デプロイされたモデルは、**LLM ドリフト** (時間の経過に伴う精度の損失) または**プロンプト ドリフト** (一貫性のないプロンプト出力) について継続的に評価されます。
+    - これにより、モデルはパフォーマンスが低下したときに迅速に対応でき、問題を修正するための微調整と評価を新たに繰り返すことができます。
 
-### 1.3. Business Perspective
-![why-ft2](images/why-ft2.png)
+### 1.3. ビジネスの視点
+![なぜ-FT2](images/why-ft2.png)
 
-- **One Size Does Not Fit All**: While foundational LLMs can handle a wide variety of tasks, they are not always optimized for specific industry use cases. Fine-tuning enables businesses to customize models for their unique needs, such as specific regulatory requirements, customer interaction styles, or industry-specific jargon, leading to better results in enterprise applications.
-- **Customization and Competitive Edge**: Fine-tuning provides businesses with a **competitive advantage** by allowing them to fine-tune models that deliver better results than off-the-shelf models. As companies are increasingly using multiple models for various tasks, customization through fine-tuning has become more critical. The growing need for tailored solutions is driving the adoption of fine-tuning as a preferred method for enterprise use.
-- **Open Source Model Utilization:** Many enterprises are opting for **open-source models**, and fine-tuning is essential to make these models suitable for specific tasks. As seen in surveys, businesses expect to increase their use of open-source models in the coming years, with fine-tuning being necessary to ensure these models meet performance expectations.[^5]
+- **1つのサイズですべてに対応できるわけではありません**:基本的なLLMはさまざまなタスクを処理できますが、特定の業界のユースケースに常に最適化されているわけではありません。微調整により、企業は特定の規制要件、顧客との対話スタイル、業界固有の専門用語など、独自のニーズに合わせてモデルをカスタマイズでき、エンタープライズアプリケーションでより良い結果を得ることができます。
+- **カスタマイズと競争力:** 微調整により、既製のモデルよりも優れた結果をもたらすモデルを微調整できるため、企業は**競争上の優位性**を得ることができます。企業がさまざまなタスクに複数のモデルを使用することが増えるにつれて、微調整によるカスタマイズがより重要になっています。カスタマイズされたソリューションに対するニーズの高まりにより、企業での使用に適した方法として微調整が採用されています。
+- **オープンソースモデルの活用:**多くの企業が**オープンソースモデル**を選択しており、これらのモデルを特定のタスクに適したものにするには微調整が不可欠です。調査で明らかになったように、企業は今後数年間でオープンソースモデルの使用を増やすと予想しており、これらのモデルがパフォーマンスの期待に応えられるようにするための微調整が必要です。[^5]
 
-### 1.4. Technical Perspective
-![why-ft3](images/why-ft3.png)<br>
-![why-ft4](images/why-ft4.png)
+### 1.4. 技術的な視点
+![なぜ-ft3](images/why-ft3.png)<br>
+![なぜ-FT4](images/why-ft4.png)
 
-- **LLM/Prompt Drift**: Large language models (LLMs) are stochastic, meaning their outputs can vary over time or when slight changes are made to the prompt. This phenomenon, known as **LLM drift** or **prompt drift**, can lead to inconsistencies in performance, particularly over long-term usage. Fine-tuning helps mitigate these issues by customizing models for stability and reliability in specific tasks or workflows.
-- **Faster or Cheaper Models**: Fine-tuning allows organizations to leverage advancements in **lightweight** or **quantization techniques**. These techniques improve model efficiency, reducing **cost** and **latency**. Instead of deploying resource-heavy, general-purpose models, fine-tuned models are tailored for specific applications, optimizing for speed and cost-efficiency without sacrificing performance.
-- **Performance Improvement**: As seen in multilingual benchmarks, fine-tuned models can outperform general-purpose models like GPT-3.5 Turbo in specific languages or tasks. Customizing a model for a particular dataset or domain (e.g., Korean benchmarks) enhances its performance significantly.
-- **Data Security/Privacy**: Fine-tuning allows businesses to better control and limit model access to sensitive data. By fine-tuning on specific datasets, organizations can ensure that the model’s responses align with privacy and security requirements, reducing the risk of data leakage or harmful information output.
+- **LLM/プロンプトドリフト**:大規模言語モデル(LLM)は確率的であり、時間の経過とともに出力が変化するか、プロンプトにわずかな変更が加えられた場合に変化する可能性があります。この現象は、**LLMドリフト**または**プロンプトドリフト**と呼ばれ、特に長期間の使用では、パフォーマンスに一貫性がなくなる可能性があります。微調整は、特定のタスクやワークフローの安定性と信頼性のためにモデルをカスタマイズすることで、これらの問題を軽減するのに役立ちます。
+- **より高速または安価なモデル**:微調整により、組織は**軽量**または**量子化技術**の進歩を活用できます。これらの手法により、モデルの効率が向上し、**コスト**と**レイテンシ**が削減されます。リソースを大量に消費する汎用モデルをデプロイするのではなく、微調整されたモデルを特定のアプリケーションに合わせて調整し、パフォーマンスを犠牲にすることなく速度とコスト効率を最適化します。
+- **パフォーマンスの向上**: 多言語ベンチマークに見られるように、微調整されたモデルは、特定の言語やタスクで GPT-3.5 Turbo のような汎用モデルよりも優れたパフォーマンスを発揮することができます。特定のデータセットまたはドメイン(例:韓国のベンチマーク)に合わせてモデルをカスタマイズすると、そのパフォーマンスが大幅に向上します。
+- **データセキュリティ/プライバシー**:微調整により、企業は機密データへのモデルアクセスをより適切に制御および制限できます。特定のデータセットを微調整することで、組織はモデルの応答がプライバシーとセキュリティの要件と一致していることを確認でき、データ漏洩や有害な情報出力のリスクを軽減できます。
 
-## 2. Azure Fine-Tuning Pipeline 
+## 2. Azure の微調整パイプライン 
 
-### 2.1. Overview
+### 2.1. 概要
 
-Azure's fine-tuning ecosystem is designed to streamline the process of adapting SLMs/LLMs to specific business requirements. By providing robust tools for data handling, model training, deployment, and ongoing management, Azure enables organizations to harness the power of AI effectively and responsibly. The integration of services like Azure ML Studio and Azure AI Studio simplifies complex workflows, allowing teams to focus on innovation and value creation rather than infrastructure management.
+Azure の微調整エコシステムは、SLM/LLM を特定のビジネス要件に適合させるプロセスを効率化するように設計されています。Azure は、データ処理、モデルのトレーニング、デプロイ、継続的な管理のための堅牢なツールを提供することで、組織が AI の力を効果的かつ責任を持って活用できるようにします。Azure ML Studio や Azure AI Studio などのサービスの統合により、複雑なワークフローが簡素化され、チームはインフラストラクチャ管理ではなく、イノベーションと価値創造に集中できます。
 
-The fine-tuning pipeline on Azure consists of several key stages:
+Azure のファインチューニング パイプラインは、いくつかの主要なステージで構成されています。
 
-- **Raw Data Collection**: Fine-tuning begins with gathering relevant datasets. These datasets can be sourced from existing task-specific data
-- **Data Generation & Synthesis**: In cases where real data is insufficient, synthetic data can be generated. This process can involve creating "seed data" or generating personas to mimic plausible task-relevant information. 
-- **Fine-tuning & Evaluation**: Fine-tuning is done on pre-trained models by adjusting parameters with new domain-specific data. Evaluation follows to ensure the fine-tuned model meets performance standards.
-- **Deployment**: Once the fine-tuning process is complete, the model is deployed through Azure ML’s managed endpoints, ensuring scalability and easy integration into applications.
-- **LLMOps**: The fine-tuned model is deployed using Azure ML Studio or Azure AI Studio. Monitoring and continuous optimization of the model’s performance is a critical part of this stage.
+- **生データの収集**: 微調整は、関連するデータセットを収集することから始まります。これらのデータセットは、既存のタスク固有のデータから取得できます
+- **データ生成と合成**:実際のデータが不十分な場合は、合成データを生成できます。このプロセスには、「シードデータ」の作成や、もっともらしいタスク関連情報を模倣するペルソナの生成が含まれる場合があります。 
+- **微調整と評価**: 微調整は、新しいドメイン固有のデータでパラメーターを調整することにより、事前トレーニング済みモデルに対して行われます。微調整されたモデルが性能基準を満たしていることを確認するために、評価が行われます。
+- **デプロイ**: 微調整プロセスが完了すると、モデルは Azure ML のマネージド エンドポイントを介してデプロイされるため、スケーラビリティが確保され、アプリケーションへの統合が容易になります。
+- **LLMOps**: 微調整されたモデルは、Azure ML Studio または Azure AI Studio を使用してデプロイされます。モデルのパフォーマンスの監視と継続的な最適化は、この段階の重要な部分です。
 
-### 2.2. Data Generation
-![ft-azure-overview1](images/ft-azure-overview1.png)
+### 2.2. データ生成
+![FT-Azure-概要1](images/ft-azure-overview1.png)
 
-Synthetic data generation is a crucial part of the fine-tuning pipeline:
+合成データの生成は、パイプラインの微調整の重要な部分です。
 
-- **Coverage Dataset (Seed)**: An initial dataset created through prompt engineering from raw data. The coverage dataset serves as a foundational "seed" to generate synthetic data that is representative of the source data. It's used when there is a collection of relevant source data available, and its goal is to ensure that the synthetic data captures a broad and comprehensive representation of the underlying task data.
-- **Generating Persona**: When there is a lack of relevant or available source data, prompt engineering can be used to generate synthetic data by simulating a specific persona or scenario. This method allows for the creation of plausible data for tasks where real data may be incomplete or unavailable, ensuring that the generated content aligns with the desired characteristics or behaviors of the persona.
-- **Privacy Assurance**: A critical component of synthetic data generation, ensuring that the synthetic data respects privacy standards. The goal is to create synthetic data that does not leak sensitive or personal information from the original dataset while still being useful for machine learning tasks. This helps prevent the exposure of private or personally identifiable information (PII) during model training or deployment.
+- **カバレッジデータセット(シード**):生データからプロンプトエンジニアリングによって作成された初期データセット。カバレッジ データセットは、ソース データを代表する合成データを生成するための基本的な "シード" として機能します。これは、関連するソース データのコレクションが利用可能な場合に使用され、その目標は、合成データが基になるタスク データの広範かつ包括的な表現を確実にキャプチャすることです。
+- **ペルソナの生成**: 関連するソースデータや利用可能なソースデータが不足している場合、プロンプトエンジニアリングを使用して、特定のペルソナやシナリオをシミュレートして合成データを生成できます。この方法により、実際のデータが不完全または利用できない可能性のあるタスクに対して、もっともらしいデータを作成できるため、生成されたコンテンツがペルソナの望ましい特性や行動と一致することが保証されます。
+- **プライバシー保証**:合成データ生成の重要な要素であり、合成データがプライバシー基準を尊重していることを確認します。目標は、元のデータセットから機密情報や個人情報を漏洩させない合成データを作成しながら、機械学習タスクに有用であることです。これにより、モデルのトレーニングまたはデプロイ中に個人情報や個人を特定できる情報 (PII) が公開されるのを防ぐことができます。
 
 
-### 2.3. Fine-tuning & Evaluation / Deployment
-![ft-azure-overview2](images/ft-azure-overview2.png)
+### 2.3. ファインチューニング & 評価 / デプロイ
+![ft-azure-概要2](images/ft-azure-overview2.png)
 
-Azure ML is a comprehensive platform for fine-tuning and deploying models. Key components include:
+Azure ML は、モデルを微調整してデプロイするための包括的なプラットフォームです。主なコンポーネントは次のとおりです。
 
-- **Azure Storage Services**: Collected data is stored in Azure Storage services, including Blob storage and Data Lake. This supports the seamless transition of data between different stages of the fine-tuning pipeline.
-- **Training Cluster**: Azure manages the training resources, ensuring that scalable GPU clusters are available to fine-tune models effectively.
-- **Container Registry and Managed Endpoints**: Models are stored and versioned in container registries. Once fine-tuned, they can be deployed via managed endpoints, ensuring automatic scaling and load balancing.
+- **Azure Storage サービス**: 収集されたデータは、Blob Storage や Data Lake などの Azure Storage サービスに格納されます。これにより、ファインチューニング パイプラインの異なるステージ間でのデータのシームレスな移行がサポートされます。
+- **トレーニング クラスター**: Azure はトレーニング リソースを管理し、モデルを効果的に微調整するためにスケーラブルな GPU クラスターを使用できるようにします。
+- **コンテナレジストリと管理対象エンドポイント**: モデルはコンテナレジストリに保存され、バージョン管理されます。微調整が完了すると、管理されたエンドポイントを介してデプロイできるため、自動スケーリングと負荷分散が保証されます。
 
 ### 2.4. LLMOps
-![ft-azure-overview3](images/ft-azure-overview3.png)
+![FT-Azure-概要3](images/ft-azure-overview3.png)
 
-Azure AI Studio provides a comprehensive suite of tools for managing and optimizing SLMs/LLMs in production environments. LLMOps encompasses the following key areas:
+Azure AI Studio には、運用環境で SLM/LLM を管理および最適化するための包括的なツール スイートが用意されています。LLMOpsには、次の主要な領域が含まれます。
 
-- **AI Hub**: A Top-level resource in AI Studio, providing security configuration with a managed network, compute resources for development and deployment, and connections to Azure services like Azure OpenAI and AI Search. It supports multiple child projects and includes an associated storage account for data and artifact storage.
-- **AI Project**: Child resource of the hub, providing access to development tools for building and customizing AI applications. It includes reusable components like datasets, models, and offers an isolated container for data uploads within the AI hub's inherited storage. Project-scoped connections ensure private access to data for project members, and it supports open-source model deployments from the catalog and fine-tuned model endpoints.
-- **Evaluation**: Azure AI Studio provides evaluation tools for automatically evaluating the performance of SLMs/LLMs. Feedback from these evaluations is used to improve the model iteratively.
+- **AI Hub**: AI Studio の最上位のリソースで、マネージド ネットワークによるセキュリティ構成、開発とデプロイ用のコンピューティング リソース、Azure OpenAI や AI Search などの Azure サービスへの接続を提供します。複数の子プロジェクトをサポートし、データと成果物のストレージに関連付けられたストレージ アカウントが含まれています。
+- **AIプロジェクト**:ハブの子リソースで、AIアプリケーションを構築およびカスタマイズするための開発ツールへのアクセスを提供します。データセットやモデルなどの再利用可能なコンポーネントが含まれており、AIハブの継承されたストレージ内にデータをアップロードするための分離されたコンテナを提供します。プロジェクト スコープの接続により、プロジェクト メンバーのデータへのプライベート アクセスが確保され、カタログからのオープンソース モデルのデプロイと微調整されたモデル エンドポイントがサポートされます。
+- **評価**: Azure AI Studio には、SLM/LLM のパフォーマンスを自動的に評価するための評価ツールが用意されています。これらの評価からのフィードバックは、モデルを反復的に改善するために使用されます。
 
 ----
 
-[^1]: [How Is ChatGPT’s Behavior Changing over Time?](https://arxiv.org/pdf/2307.09009)
+[^1]: [ChatGPTの行動は時間の経過とともにどのように変化していますか?](https://arxiv.org/pdf/2307.09009)
 
-[^2]: [LLM Drift, Prompt Drift, Chaining & Cascading by Cobus Greyling](https://cobusgreyling.medium.com/llm-drift-prompt-drift-chaining-cascading-fa8fbf67c0fd)
+[^2]: [LLM Drift, Prompt Drift, Chaining & Cascading by Cobus Greyling (英語)](https://cobusgreyling.medium.com/llm-drift-prompt-drift-chaining-cascading-fa8fbf67c0fd)
 
-[^3]: [Microsoft Phi-3.5-MoE-instruct](https://huggingface.co/microsoft/Phi-3.5-MoE-instruct)
+[^3]: [マイクロソフト ファイ-3.5-MoE-インストラクション](https://huggingface.co/microsoft/Phi-3.5-MoE-instruct)
 
-[^4]: [Microsoft Prompt Flow](https://github.com/microsoft/promptflow)
+[^4]: [Microsoft プロンプト フロー](https://github.com/microsoft/promptflow)
 
-[^5]: [16 Changes to the Way Enterprises Are Building and Buying Generative AI](https://a16z.com/generative-ai-enterprise-2024/)
+[^5]: [企業がジェネレーティブAIを構築および購入する方法の16の変化](https://a16z.com/generative-ai-enterprise-2024/)

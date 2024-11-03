@@ -8,57 +8,57 @@ nav_order: 4.3
 
 # GLAN (Generalized Instruction Tuning) 
 
-## Overview
-GLAN uses a systematic taxonomy of human knowledge and abilities to generate large-scale synthetic instruction data across a variety of fields. 
-This is a method of generating data from scratch, without relying on seed examples or existing datasets.
+## 概要
+GLANは、人間の知識と能力の体系的な分類法を使用して、さまざまな分野にわたる大規模な合成命令データを生成します。
+これは、シードの例や既存のデータセットに頼らずに、ゼロからデータを生成する方法です。
 
-GLAN mimics the systematic structure of human learning systems, generating a wide range of instruction data covering a variety of disciplines and technologies. It is not limited to a specific domain and can encompass a variety of tasks across all fields.
-This method shows excellent performance in many aspects such as mathematical reasoning, coding, academic testing, and logical reasoning, and is effective even without training data for a specific task.
+GLANは、人間の学習システムの体系的な構造を模倣し、さまざまな分野や技術をカバーする幅広い指導データを生成します。特定の領域に限定されず、すべての分野にわたるさまざまなタスクを網羅できます。
+この手法は、数学的推論、コーディング、学術的テスト、論理的推論など、多くの面で優れた性能を発揮し、特定の課題に対する学習データがなくても有効です。
 
-## Implementation
-This open-source implementation is based on the contents of the paper - https://arxiv.org/pdf/2402.13064.
+## 実装
+このオープンソースの実装は、論文 https://arxiv.org/pdf/2402.13064 の内容に基づいています。
 
-### Main function
-- `glan_instruction_generation()`: GLAN pipeline
+### 主な機能
+- `glan_instruction_generation()`: GLANパイプライン
 
-### Sub functions
-- `generate_taxonomy()`: Generate a taxonomy of human knowledge and capabilities. Disciplines derived from taxonomy are used to create subjects.
-You can have GPT automatically create disciplines (in this case, human verification is required), or you can use the disciplines (`disciplines.txt`) we created.
-- `generate_subjects()`: Generate a list of subjects for a given discipline. Please refer to section 2.2 of the paper.
-- `generate_syllabus()`: Generate a syllabus for a given subject at a specific level. Please refer to section 2.3 of the paper.
-- `sample_class_sessions_and_key_concepts()`: Sample class sessions and key concepts to generate questions of varying difficulty.
-- `generate_questions()`: Generate questions based on class sessions and key concepts using LangChain pipeline. Please refer to section 2.4 of the paper.
-- `generate_answers()`: Generate answers to the questions using LangChain pipeline. Please refer to section 2.4 of the paper.
+### サブ機能
+- `generate_taxonomy()`: 人間の知識と能力の分類法を生成します。分類法から派生した分野は、主題を作成するために使用されます。
+GPTに自動でディシプリンを作成させることもできます(この場合は人間による検証が必要)、作成したディシプリン（）を使用することもできます`disciplines.txt`。
+- `generate_subjects()`: 特定の分野の科目のリストを生成します。論文のセクション2.2を参照してください。
+- `generate_syllabus()`: 特定の科目のシラバスを特定のレベルで生成します。論文のセクション2.3を参照してください。
+- `sample_class_sessions_and_key_concepts()`:サンプルクラスセッションと主要な概念を使用して、さまざまな難易度の問題を生成します。
+- `generate_questions()`: LangChain パイプラインを使用して、クラス セッションと主要な概念に基づいて質問を生成します。論文のセクション2.4を参照してください。
+- `generate_answers()`: LangChain パイプラインを使用して質問に対する回答を生成します。論文のセクション2.4を参照してください。
 
 
-## How to create dataset
-Example datasets are placed in this [folder](samples). Please try the minimal example first and configure your dataset by referring to the tunable parameters.
+## データセットの作成方法
+サンプルデータセットは、この[フォルダ](samples)に配置されます。最初に最小限の例を試し、調整可能なパラメーターを参照してデータセットを構成してください。
 
-### Example
+### 例
 
-Debug for test - You need to change parameters
+テスト用のデバッグ - パラメーターを変更する必要があります
 ```shell
 chmod +x run_debug.sh
 ./run_debug.sh
 ```
 
-Generate large amounts of data for each discipline (Recommended)
+各分野に対して大量のデータを生成する (推奨)
 ```shell
 chmod +x run_each_discipline.sh
 ./run_each_discipline.sh
 ```
 
-Generate large amounts of data
+大量のデータを生成する
 ```shell
 chmod +x run.sh
 ./run.sh
 ```
 
 
-### Tunable parameters
+### 調整可能なパラメータ
 
-#### QnA generation
-See `generate.py` for details.
+#### QnA ジェネレーション
+詳細については、「」を参照してください `generate.py` 。
 
 ```python
 parser.add_argument("--generate_disciplines", type=bool, default=False)
@@ -86,8 +86,8 @@ parser.add_argument("--output_dir", type=str, default="outputs")
 parser.add_argument("--logfile_name", type=str, default="logfile.log")
 ```
 
-#### Answer generation
-See `generate_answer_only.py` for details.
+#### 回答の生成
+詳細については、「」を参照してください `generate_answer_only.py` 。
 
 ```
 parser.add_argument("--questions_filepath", type=str, default="[YOUR JSONL]")

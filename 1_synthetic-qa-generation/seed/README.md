@@ -8,24 +8,24 @@ nav_order: 4.1
 
 # Generate Coverage dataset (seed data)
 
-## Overview
-The task is to preprocess and convert this heterogeneous data into a structured format suitable for fine-tuning or RAG. This involves extracting and cleaning text from various file formats, converting tables and images to text using Azure AI Services if necessary. This dataset is used as a seed dataset for fine tuning or RAG and is used as a baseline to improve the performance of domain-specific use cases.
+## 概要
+タスクは、この異種データを前処理し、微調整またはRAGに適した構造化形式に変換することです。これには、さまざまなファイル形式からのテキストの抽出とクリーニング、必要に応じて Azure AI Services を使用したテーブルと画像のテキストへの変換が含まれます。このデータセットは、微調整やRAGのシードデータセットとして使用され、ドメイン固有のユースケースのパフォーマンスを向上させるためのベースラインとして使用されます。
 
 {: .note}
-This implementation is just baseline for ideation, not for production. You need to customize the code for your own data.
+この実装は、アイデア出しのベースラインにすぎず、本番環境のベースラインではありません。独自のデータ用にコードをカスタマイズする必要があります。
 
-## Getting started
+## はじめ
 
-![diagram1](../imgs/diagram1.png)
+![図1](../imgs/diagram1.png)
 
-Convert the given raw data into data that can be used for model training/RAG/evaluation using Azure OpenAI GPT-4o. `make_qa_multimodal_pdf_docai.ipynb` is most recommended. However, if you feel that the logic of this code is complicated, or if your file content consists only of images or text, please try looking at other Jupyter notebooks first.
-Run the Jupyter notebook in the **[seed](seed)** folder.
+与えられた生データを、Azure OpenAI GPT-4o を使用したモデルのトレーニング/RAG/評価に使用できるデータに変換します。 `make_qa_multimodal_pdf_docai.ipynb` が最も推奨されます。ただし、このコードのロジックが複雑だと感じた場合や、ファイルの内容が画像やテキストのみで構成されている場合は、まず他の Jupyter Notebook を試してみてください。
+シード フォルダーで Jupyter ノートブックを実行します **[](seed)** 。
 
-#### PDF
-- `make_qa_multimodal_pdf_docai.ipynb`: (Recommended) Generate QnA synthetic dataset from a Complex PDF using Azure AI Document Intelligence.
-- `make_qa_multimodal_pdf_oss.ipynb`:  Generate QnA synthetic dataset from a Complex PDF using Open source (Unstructured toolkit for this hands-on). To run this file, you first need to install the required packages with `startup_unstructured.sh`. The installation will take a few minutes.
-- `make_qa_only_image_multiple_pdf.ipynb`: Generate QnA synthetic dataset from multiple PDFs - Image-heavy PDF.
-- `make_qa_only_image_pdf.ipynb`: Generate QnA synthetic dataset from a PDF - Image-heavy PDF.
+#### PDFで見る
+- `make_qa_multimodal_pdf_docai.ipynb`: (推奨) Azure AI Document Intelligence を使用して、複雑な PDF から QnA 合成データセットを生成します。
+- `make_qa_multimodal_pdf_oss.ipynb`: オープンソースを使用して、複雑な PDF から QnA 合成データセットを生成します (このハンズオン用の非構造化ツールキット)。このファイルを実行するには、まず必要なパッケージを `startup_unstructured.sh`.インストールには数分かかります。
+- `make_qa_only_image_multiple_pdf.ipynb`: 複数の PDF から QnA 合成データセットを生成します - 画像の多い PDF。
+- `make_qa_only_image_pdf.ipynb`: PDF から QnA 合成データセットを生成します - 画像の多い PDF。
 
-#### CSV
-- `make_qa_csv.ipynb`: This is the general case. It is not difficult to create a QnA dataset by reading and chunking with CSVLoader.
+#### CSVファイル
+- `make_qa_csv.ipynb`: これは一般的なケースです。CSVLoader で読み取ってチャンクすることで QnA データセットを作成することは難しくありません。
