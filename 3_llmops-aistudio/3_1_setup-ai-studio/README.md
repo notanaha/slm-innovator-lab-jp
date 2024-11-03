@@ -1,73 +1,73 @@
 ---
-layout: default
-title: Lab 3.1 Set Up Azure AI Studio for LLMOps
-parent: Lab 3. LLMOps for SLM with Azure AI Studio
-nav_order: 61
+レイアウト: デフォルト
+タイトル: Lab 3.1 Azure AI Studio for LLMOps のセットアップ
+親: ラボ 3。Azure AI Studio を使用した SLM の LLMOps
+nav_order:61
 ---
 
-# Lab 3.1 Scenario 1: Set Up Azure AI Studio for LLMOps
+# ラボ 3.1 シナリオ 1: LLMOps 用に Azure AI Studio を設定する
 
-## Overview
-In this lab, we will learn how to set up Azure AI studio with Prompt flow for your LLMOps. 
+## 概要
+このラボでは、LLMOps のプロンプト フローを使用して Azure AI Studio を設定する方法について説明します。 
 
-[no-code, 10min]
+[ノーコード、10分]
 
-### Result
-![result](images/created-project.jpg)
+### 結果
+![結果](images/created-project.jpg)
 
-### Prerequisites
-An Azure subscription is required, where you can create an AI Project along with its AI Hub Resource, Prompt flow, a Content Safety service, deployed fine-tuned model endpoint and an AI Search service.
+### 前提 条件
+AI Hub リソース、プロンプト フロー、Content Safety サービス、デプロイされた微調整されたモデル エンドポイント、AI Search サービスと共に AI プロジェクトを作成できる Azure サブスクリプションが必要です。
 
-### Steps
+### ステップス
     0️⃣ Create the Azure Resource Group  
     1️⃣ Create Azure AI project in Azure AI Studio
     2️⃣ Create a compute instance to run Prompt flow
     🗑️ Clean up resources
 
-You can use compute instance as your dev box, learn more here: Get started with Azure AI projects in VS Code (Web)
-We also provide VS code extension to help you develop prompt flow, learn more here: Prompt flow for VS Code
+コンピューティング インスタンスを開発ボックスとして使用することができる場合は、VS Code で Azure AI プロジェクトを開始する (Web) を参照してください。
+また、プロンプト フローの開発に役立つ VS Code 拡張機能も提供しています。詳細については、VS Code のプロンプト フローを参照してください。
 
-### 0️⃣ Create the Azure Resource Group 
-1. Open the Azure portal and select resource groups
-    ![Search resource group on the azure portal](images/find-resource-group.jpg) 
+### 0️⃣ Azureリソースグループの作成 
+1. Azure portal を開き、リソース グループを選択します
+     Azure portal ![ ](images/find-resource-group.jpg)でリソース グループを検索する
 
-1. Select Create and Enter the following values:
-- Subscription: Select your Azure subscription.
-- Resource group: Enter a new resource group name.
-- Region: Select an Azure location, such as Central US.  
-    ![Create resource group](images/create-resource-group.jpg) 
+1. [作成] を選択し、次の値を入力します。
+- サブスクリプション: Azure サブスクリプションを選択します。
+- リソース グループ: 新しいリソース グループ名を入力します。
+- リージョン: Azure の場所 (米国中部など) を選択します。 
+    ![リソース グループ](images/create-resource-group.jpg)を作成する
 
-3. Enter the following values:
-- Subscription: Select your Azure subscription.
-- Resource group: Enter a new resource group name.
-- Region: Select an Azure location, such as Central US.    
+3. 次の値を入力します。
+- サブスクリプション: Azure サブスクリプションを選択します。
+- リソース グループ: 新しいリソース グループ名を入力します。
+- リージョン: Azure の場所 (米国中部など) を選択します。    
 
-### 1️⃣ Create an Azure AI project in Azure AI Studio
-1. Go to the [Home page of Azure AI Studio](https://ai.azure.com/) 
-2. Select + new project
-3. Enter a name for the project and select a hub from the dropdown to host your project. If you don't have access to a hub yet, select Create a new hub.
-    ![Create project](images/create-project.jpg) 
+### 1️⃣ Azure AI Studio で Azure AI プロジェクトを作成する
+1. Azure AI Studio[  のホーム ページ](https://ai.azure.com/)に移動します 
+2. [+ 新しいプロジェクト] を選択します
+3. プロジェクトの名前を入力し、ドロップダウンからハブを選択してプロジェクトをホストします。ハブへのアクセス権がまだない場合は、 [新しいハブの作成] を選択します。
+    ![プロジェクト](images/create-project.jpg)の作成
 
-4. In order to create a hub, enter the subscription, resource group already made, Location and select or create an Azure Open AI resource
-    ![Create a hub](images/create-hub.jpg) 
+4. ハブを作成するには、サブスクリプション、既に作成されているリソース グループ、場所を入力し、Azure Open AI リソースを選択または作成します
+    ![ハブ](images/create-hub.jpg)を作成する
 
-5. On the Review and finish page, you see the resources will be created. It my take a few minutes to complete.
-    ![Create a hub](images/project-review-finish.jpg) 
+5. [レビューと完了] ページに、リソースが作成されることが表示されます。完了するまでに数分かかります。
+    ![ハブ](images/project-review-finish.jpg)を作成する
 
-### 2️⃣ Create a compute instance to run Prompt flow
-1. Once finishing to create Azure Open AI project, you will see the screen below
-    ![result](images/created-project.jpg)
-- Option1-1: Azure Machine Learning -> Prompt flow -> Start compute session  
-- Option1-2: Azure Machine Learning -> Compute Instances -> Launch VS Code 
-- Option2-1: Azure AI Studio -> Prompt flow -> Start compute session
-- Option2-2: Azure AI Studio -> Code -> Create new compute -> VS Code container -> Launch VS Code
-- Option3-1: CodeSpaces -> Prompt flow -> Start compute
+### 2️⃣ Prompt フローを実行するコンピューティング インスタンスを作成する
+1. Azure Open AI プロジェクトの作成が完了すると、次の画面が表示されます
+    ![結果](images/created-project.jpg)
+- オプション 1-1: Azure Machine Learning -> プロンプト フロー -> コンピューティング セッションを開始する  
+- オプション 1-2: Azure Machine Learning > コンピューティング インスタンス > VS Code の起動 
+- オプション 2-1: Azure AI Studio -> プロンプト フロー -> コンピューティング セッションの開始
+- オプション 2-2: Azure AI Studio -> コード -> 新しいコンピューティングの作成 -> VS Code コンテナー -> VS Code の起動
+- オプション 3-1: CodeSpaces > プロンプト フロー -> コンピューティングの開始
 
-Serverless compute sessions offer cost-effectiveness, scalability, reduced management overhead, and quick setup, but come with drawbacks like limited control and cold start latency. On the other hand, VS code extension for prompt flow provides customization, consistency, and flexibility, but can incur higher costs, require more management effort, and take longer to set up.
+サーバーレス コンピューティング セッションは、費用対効果、スケーラビリティ、管理オーバーヘッドの削減、迅速なセットアップを提供しますが、制御の制限やコールド スタートの遅延などの欠点があります。一方、プロンプト フロー用の VS Code 拡張機能は、カスタマイズ、一貫性、柔軟性を提供しますが、コストが高くなり、管理作業が増え、セットアップに時間がかかる可能性があります。
 
-### 🗑️ Clean up resources
-1. Go to the [Azure portal](https://portal.azure.com/) and select Resource groups
-2. Select the resource group you created for this lab
-3. Select Delete resource group
-4. Enter the resource group name and select Delete
+### ️リソースをクリーンアップする
+1. Azure portal[ に移動し ](https://portal.azure.com/) 、 [リソース グループ] を選択します
+2. このラボ用に作成したリソース グループを選択します
+3. [リソース グループの削除] を選択します
+4. リソース グループ名を入力し、 [削除] を選択します
 

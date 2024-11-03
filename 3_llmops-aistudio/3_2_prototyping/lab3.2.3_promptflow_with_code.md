@@ -1,30 +1,30 @@
 ---
-layout: default
-title: Lab 3.2.3 Run the Chat flows with Code
-permalink: /3_2_3_prototyping/
-parent: Lab 3.2 Overview
-grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
-nav_order: 623
+レイアウト: デフォルト
+タイトル: Lab 3.2.3 Run the Chat flows with Code
+固定リンク: /3_2_3_prototyping/
+親: ラボ 3.2 の概要
+grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
+nav_order:623
 ---
 
-# Lab 3.2.3 Run the Chat flows with Code
+# ラボ 3.2.3 コードを使用したチャット フローの実行
 
-### Prerequisites
+### 前提 条件
 
-- An Azure subscription where you can create an AI Hub and AI project Resource.
-- Online endpoint of the phi3 fine-tuned model in Azure ML Studio
-- Deployed gpt4o model in Azure AI Studio 
+- AI Hub と AI プロジェクト リソースを作成できる Azure サブスクリプション。
+- Azure ML Studio の phi3 微調整モデルのオンライン エンドポイント
+- Azure AI Studio にデプロイされた gpt4o モデル 
 
 
-### Task
+### タスク
 
-- I want to run the flows using promptflow python sdk. Do some testing, log tracing and monitoring to determine the right model. 
+- promptflow python sdkを使用してフローを実行したいです。テスト、ログトレース、監視を行い、適切なモデルを決定します。 
 
-### TOC
+### 目次
     1️⃣ Create another flow on the jupyter notebook 
     2️⃣ run the flow and check the outputs 
 
 
-### workthough Jupyter Notebook
-- Let's create and run the same flow on the jupyter notebook using promptflow python sdk. You will learn how to execute the flow on Azure [promptflow_with_code.ipynb](promptflow_with_code.ipynb)
+### Jupyter Notebookを通じて作業
+- promptflow python sdk を使用して、jupyter notebook で同じフローを作成して実行してみましょう。Azure [promptflow_with_code.ipynb でフローを実行する方法を学習します](promptflow_with_code.ipynb)
 

@@ -1,21 +1,21 @@
 ---
-layout: default
-title: Lab 3.2 Overview
-permalink: /3_2_overview/
-parent: Lab 3. LLMOps for SLM with Azure AI Studio
-nav_order: 62
-has_children: true
+レイアウト: デフォルト
+タイトル: Lab 3.2 Overview
+固定リンク: /3_2_overview/
+親: ラボ 3。Azure AI Studio を使用した SLM の LLMOps
+nav_order:62
+has_children:真
 ---
 
-# Lab 3.2 Scenario 1: Prototype your first gen AI application with prompt flow
+# ラボ 3.2 シナリオ 1: プロンプト フローを使用して第 1 世代 AI アプリケーションのプロトタイプを作成する
 
-## Overview
-In this lab, we will learn how to utilize Prompt flow to prototype your generative AI application. Azure AI studio with Prompt flow help you ideate and explore LLMs to convince your specific use cases. 
+## 概要
+このラボでは、Prompt フローを使用して生成 AI アプリケーションのプロトタイプを作成する方法を学習します。プロンプト フローを備えた Azure AI Studio は、LLM のアイデアを作成して探索し、特定のユース ケースを説得するのに役立ちます。 
 
-![LLMOps](images/prototyping_requirements.jpg)
+![LLMOpsの](images/prototyping_requirements.jpg)
 
-### 🥇Other Resources
-Here are the reference architectures, best practices and guidances on this topic. Please refer to the resources below. 
+### その他のリソース
+ここでは、このトピックに関するリファレンスアーキテクチャ、ベストプラクティス、およびガイダンスを示します。以下のリソースを参照してください。 
 
 - https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/how-to-end-to-end-llmops-with-prompt-flow?view=azureml-api-2
 - https://github.com/microsoft/llmops-promptflow-template

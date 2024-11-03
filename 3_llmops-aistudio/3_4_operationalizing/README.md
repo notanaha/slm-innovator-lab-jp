@@ -1,25 +1,25 @@
 ---
-layout: default
-title: Lab 3.4 Overview
-permalink: /3_4_overview/
-parent: Lab 3. LLMOps for SLM with Azure AI Studio
-nav_order: 64
-has_children: true
+レイアウト: デフォルト
+タイトル: Lab 3.4 Overview
+固定リンク: /3_4_overview/
+親: ラボ 3。Azure AI Studio を使用した SLM の LLMOps
+nav_order:64
+has_children:真
 ---
 
-# Lab 3.4 Scenario 4: Content Safety with Azure AI studio before production
+# ラボ 3.4 シナリオ 4: 運用前の Azure AI Studio を使用したコンテンツの安全性
 
-## Overview
-In this lab, you will experience how to ensure production deployment using content filter. This content filtering system is powered by Azure AI Content Safety, and it works by running both the prompt input and completion output through an ensemble of classification models aimed at detecting and preventing the output of harmful content. Variations in API configurations and application design might affect completions and thus filtering behavior.
+## 概要
+このラボでは、コンテンツ フィルターを使用して運用環境のデプロイを確保する方法を体験します。このコンテンツ フィルタリング システムは Azure AI Content Safety を利用しており、有害なコンテンツの出力を検出して防止することを目的とした分類モデルのアンサンブルを通じて、プロンプト入力と完了出力の両方を実行することで機能します。API 構成とアプリケーション設計のバリエーションは、完了に影響を与え、フィルタリング動作に影響を与える可能性があります。
 
 
-![LLMOps](images/operation_requirements.jpg)
+![LLMOpsの](images/operation_requirements.jpg)
 
-### 🔨Limitations
-The content filtering models have been trained and tested on the following languages: English, German, Japanese, Spanish, French, Italian, Portuguese, and Chinese. However, the service can work in many other languages, but the quality can vary. In all cases, you should do your own testing to ensure that it works for your application.
+### 制限
+コンテンツ フィルタリング モデルは、英語、ドイツ語、日本語、スペイン語、フランス語、イタリア語、ポルトガル語、中国語でトレーニングおよびテストされています。ただし、このサービスは他の多くの言語でも機能しますが、品質は異なる場合があります。いずれの場合も、独自のテストを行って、アプリケーションで機能することを確認する必要があります。
 
-### 🥇Other Resources
-Here are the reference architectures, best practices and guidances on this topic. Please refer to the resources below. 
+### その他のリソース
+ここでは、このトピックに関するリファレンスアーキテクチャ、ベストプラクティス、およびガイダンスを示します。以下のリソースを参照してください。 
 
 - https://learn.microsoft.com/en-us/azure/ai-studio/concepts/evaluation-approach-gen-ai
 - https://github.com/Azure-Samples/llm-evaluation

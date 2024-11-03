@@ -1,61 +1,61 @@
 ---
-layout: default
-title: Lab 3.2.2 SLM and LLM comparison with Azure AI Studio Prompt Flow (UI)
-permalink: /3_2_2_prototyping/
-parent: Lab 3.2 Overview
-grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
-nav_order: 622
+レイアウト: デフォルト
+タイトル: ラボ 3.2.2 SLM と LLM と Azure AI Studio プロンプト フロー (UI) の比較
+固定リンク: /3_2_2_prototyping/
+親: ラボ 3.2 の概要
+grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
+nav_order:622
 ---
 
-# Lab 3.2.2 SLM and LLM comparison with Azure AI Studio Prompt Flow (UI)
+# ラボ 3.2.2: SLM と LLM と Azure AI Studio プロンプト フロー (UI) の比較
 
-### Prerequisites
+### 前提 条件
 
-- An Azure subscription where you can create an AI Hub and AI project Resource.
-- Online endpoint of the fine-tuned model in Azure ML Studio
-- Deployed gpt-4o model in Azure AI Studio 
+- AI Hub と AI プロジェクト リソースを作成できる Azure サブスクリプション。
+- Azure ML Studio での微調整されたモデルのオンライン エンドポイント
+- Azure AI Studio にデプロイされた gpt-4o モデル 
 
 
-### Task
+### タスク
 
-- I want to do some testing, log tracing and monitoring to determine the right model. 
+- 適切なモデルを決定するために、テスト、ログトレース、監視を行いたいと考えています。 
 
-### TOC
+### 目次
     1️⃣ Create another model using LLM Node 
     2️⃣ Interact with the Chat: Test and trace the chat flow
 
-### 1️⃣ Create another model using LLM Node to compare the results
-1. Create a new LLM Node to test the different model and prompt.
-![create a new LLM Node](images/add_llm.jpg)
+### 1️(2) LLMノードを使用して別のモデルを作成し、結果を比較する
+1. 新しい LLM ノードを作成して、異なるモデルとプロンプトをテストします。
+![新しい LLM ノードの作成](images/add_llm.jpg)
 
-2. Put the LLM Node name and select the model type as LLM
-![put the LLM Node name](images/add_node_name.jpg)
+2. LLM ノード名を入力し、モデル タイプとして LLM を選択します
+![LLM ノード名を入力します](images/add_node_name.jpg)
 
-3. Add the connection parameters of the LLM Node to call the deployed LLM model and Click Validate and parse input. Don't forget to add inputs to the LLM Node.
-![add the connection parameters](images/add_gpt4o_node.jpg)
+3. LLM ノードの接続パラメータを追加して、デプロイされた LLM モデルを呼び出し、[検証して入力を解析] をクリックします。LLM ノードに入力を追加することを忘れないでください。
+![接続パラメータを追加する](images/add_gpt4o_node.jpg)
 
-4. Add more outputs to the LLM Node to get the generated text from the LLM model. Chat output radio box should be checked to display the generated text on the chat window.
-![add the connection parameters](images/add_more_output.jpg)
+4. LLM ノードに出力をさらに追加して、LLM モデルから生成されたテキストを取得します。チャット出力ラジオボックスをオンにすると、生成されたテキストがチャットウィンドウに表示されます。
+![接続パラメータを追加する](images/add_more_output.jpg)
 
-5. Save the LLM Node and run the chat flow to test the LLM model
-![save the LLM Node](images/save_open_chat_window.jpg)
-
-
-### 2️⃣ Interact with the Chat: Test and trace the chat flow
-1. Let's test the phi3.5 and LLM model on the chat window
-![test the phi3.5 and LLM model](images/ask_about_phi.jpg)
-
-2. You can review the both phi3.5 and LLM successfully executed  
-![save the LLM Node](images/final_dag_graph.jpg)
-
-3. Click the View outputs to check the each model's output
-![click view output](images/click_view_output.jpg)
+5. LLM ノードを保存し、チャット フローを実行して LLM モデルをテストします
+![LLM ノードの保存](images/save_open_chat_window.jpg)
 
 
-4. You can trace each model to check the performance and behavior of the model
-![trace each model](images/two_model_comparison.png)
+### 2️⃣ チャットとの対話:チャットフローをテストおよび追跡します
+1. チャットウィンドウで phi3.5 と LLM モデルをテストしてみましょう
+![PHI3.5 モデルと LLM モデルのテスト](images/ask_about_phi.jpg)
 
-5. If you go back to the Azure ML studio, you can get log and monitor your endpoint to check the performance and behavior of the model.
-![monitor endpoint](images/monitor_endpoint_metrics.png)
-![endpoint log](images/endpoint_log.png)
+2. phi3.5 と LLM の両方が正常に実行されたことを確認できます 
+![LLM ノードの保存](images/final_dag_graph.jpg)
+
+3. [出力の表示] をクリックして、各モデルの出力を確認します
+![[出力の表示] をクリックします](images/click_view_output.jpg)
+
+
+4. 各モデルをトレースして、モデルのパフォーマンスと動作を確認できます
+![各モデルをトレースする](images/two_model_comparison.png)
+
+5. Azure ML Studio に戻ると、ログを取得し、エンドポイントを監視して、モデルのパフォーマンスと動作を確認できます。
+![エンドポイント](images/monitor_endpoint_metrics.png)
+![エンドポイントログの監視](images/endpoint_log.png)
 

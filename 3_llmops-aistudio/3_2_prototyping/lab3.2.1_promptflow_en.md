@@ -1,48 +1,48 @@
 ---
-layout: default
-title: Lab 3.2.1 Prototyping a Gen AI app using the fine-tuned model with Azure AI Studio Prompt Flow
-permalink: /3_2_1_prototyping_en/
-parent: Lab 3.2 Overview
-grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
-nav_order: 621
+レイアウト: デフォルト
+タイトル: ラボ 3.2.1 Azure AI Studio プロンプト フローを使用した微調整されたモデルを使用した Gen AI アプリのプロトタイプ作成
+固定リンク: /3_2_1_prototyping_en/
+親: ラボ 3.2 の概要
+grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
+nav_order:621
 ---
 
-# Lab 3.2.1 Prototyping a Gen AI app using the fine-tuned model with Azure AI Studio Prompt Flow
+# ラボ 3.2.1 Azure AI Studio プロンプト フローで微調整されたモデルを使用した Gen AI アプリのプロトタイプ作成
 
-### Prerequisites
+### 前提 条件
 
-- An Azure subscription where you can create an AI Hub and AI project Resource.
-- Online endpoint of the fine-tuned model in Azure ML Studio
-- Deployed gpt-4o model in Azure AI Studio 
+- AI Hub と AI プロジェクト リソースを作成できる Azure サブスクリプション。
+- Azure ML Studio での微調整されたモデルのオンライン エンドポイント
+- Azure AI Studio にデプロイされた gpt-4o モデル 
 
 
-### Task
+### タスク
 
-- I want to run a simple PoC on a model that fine-tuned. 
-- I want to see what results are generated when I run the prompts. 
+- 微調整したモデルで簡単なPoCを実行したいです。 
+- プロンプトを実行したときにどのような結果が生成されるかを確認したいです。 
 
-### TOC
+### 目次
     1️⃣ Create a basic chat flow 
     2️⃣ Integrate the fine-tuned phi3.5 endpoint into Python Node
 
-### 1️⃣ Create a basic chat flow 
+### 1️⃣ 基本的なチャットフローを作成する 
 
-Define the Chat Flow: Create a new chat flow and define the chat flow structure
+チャットフローの定義: 新しいチャットフローを作成し、チャットフロー構造を定義します
 
-1. Azure AI Studio > Prompt flow > Click +Create to create a new flow
-![create a new flow](images/create_new_flow.jpg)
+1. Azure AI Studio > プロンプト フロー > [+ 作成] をクリックして新しいフローを作成します
+![新しいフローを作成する](images/create_new_flow.jpg)
 
-2. In order to get a user-friendly chat interface, select Chat flow
-![select Chat flow](images/create_new_chat_flow.jpg)
+2. ユーザーフレンドリーなチャットインターフェースを取得するには、[チャットフロー]を選択します
+![チャットフローを選択します](images/create_new_chat_flow.jpg)
 
-3. Put your folder name to store your Promptflow files and click the Create button
-![Put your folder name](images/put_folder_name.jpg)
+3. Promptflowファイルを保存するフォルダ名を入力し、[作成]ボタンをクリックします
+![フォルダ名を入力してください](images/put_folder_name.jpg)
 
-4. Change as raw file model to modify your basic chat flow
-![Put your folder name](images/change_raw_file_mode.jpg)
+4. RAWファイルモデルとして変更して、基本的なチャットフローを変更します
+![フォルダ名を入力してください](images/change_raw_file_mode.jpg)
 
-5. Modify flow.dag.yaml and define the new chat flow structure. You can also refer the source code below. 
-![Put your folder name](images/modify_dag.jpg)
+5. flow.dag.yaml を変更し、新しいチャット フロー構造を定義します。以下のソースコードも参照できます。
+![フォルダ名を入力してください](images/modify_dag.jpg)
 
 ```
 inputs:
@@ -65,30 +65,30 @@ nodes:
   
 ```
 
-6. change the Raw file mode again and Save your modified flow. Make sure that your compute instance is running to execute the updated chat flow
-![create a new flow](images/save_and_run_compute_session.jpg)
+6. Raw ファイル モードを再度変更し、変更したフローを保存します。更新されたチャット フローを実行するためにコンピューティング インスタンスが実行されていることを確認します
+![新しいフローを作成する](images/save_and_run_compute_session.jpg)
 
-7. review the modified flow 
-![review the modified flow](images/first_dag_graph.jpg)
+7. 変更したフローを確認する
+![変更したフローを確認する](images/first_dag_graph.jpg)
 
 
-### 2️⃣ Integrate the fine tuned phi3.5 endpoint into Python Node
-1. First of all, In order to get the endpoint information to create a connection, Navigate to the Azure Machine Learning workspace you created > Endpoints > Consume tab > Copy the REST endpoint and primary key as the authentication information.
-![copy the REST endpoint and primary key](images/copy_endpoint_comsumption_info.jpg)
+### 2️⃣微調整されたphi3.5エンドポイントをPythonノードに統合します
+1. まず、エンドポイント情報を取得して接続を作成するには、>作成したAzure Machine Learningワークスペースに移動し、[エンドポイント]>[消費]タブで>RESTエンドポイントとプライマリキーを認証情報としてコピーします。
+![REST エンドポイントと主キーをコピーする](images/copy_endpoint_comsumption_info.jpg)
 
-2. Go back to Azure AI Studio > Settings > Create a new connection to integrate with deployed fine-tuned phi3.5 endpoint. 
-![create a new connection](images/create_new_connection.jpg)
+2. Azure AI Studio の > 設定 > に戻り、デプロイされた微調整された phi3.5 エンドポイントと統合するための新しい接続を作成します。
+![新しい接続を作成する](images/create_new_connection.jpg)
 
-3. Select the connection type as Custom keys and put the connection information 
-![select the connection type](images/add_custom_keys.jpg)
+3. 接続タイプとして [カスタム キー] を選択し、接続情報を入力します
+![接続タイプを選択します](images/add_custom_keys.jpg)
 
-4. Add the connection information to the Python Node to request the deployed phi3.5 endpoint and click add connection
-![add the connection information](images/create_connect_custom_resource.jpg)
+4. Python ノードに接続情報を追加して、デプロイされた phi3.5 エンドポイントをリクエストし、接続の追加をクリックします
+![接続情報を追加する](images/create_connect_custom_resource.jpg)
 
-5. Attach the code below on your Python Node to request the fine-tuned phi3.5 endpoint. 
+5. 以下のコードをPythonノードに添付して、微調整されたphi3.5エンドポイントをリクエストします。 
 
 {: .note}
-Since this endpoint is based on fine-tuned online endpoints in Azure Machine Learning, the input and output specifications follow the scoring script provided in the previous step on 2_slm-fine-tuning-mlstudio. Please check the [score.py](../../2_slm-fine-tuning-mlstudio/phi3/src_serve/score.py) file in the Azure ML studio to get the input and output format. If you want to understand the scoring_script, please refer to the [Understand the scoring script](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-deploy-online-endpoints?view=azureml-api-2&tabs=python#understand-the-scoring-script).
+このエンドポイントは Azure Machine Learning の微調整されたオンライン エンドポイントに基づいているため、入力と出力の仕様は、2_slm-fine-tuning-mlstudio の前の手順で提供されたスコアリング スクリプトに従います。[](../../2_slm-fine-tuning-mlstudio/phi3/src_serve/score.py) Azure ML Studio で score.py ファイルを確認して、入力形式と出力形式を取得してください。scoring_scriptを理解するには、[スコアリング スクリプトの理解を参照してください](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-deploy-online-endpoints?view=azureml-api-2&tabs=python#understand-the-scoring-script)。
 
 ```python
 import urllib
@@ -156,13 +156,13 @@ def my_python_tool(input_data: str, connection: CustomConnection) -> str:
     return chat(input_data, connection)
 ```
 
-6. add the input parameters of the Python Node to request the deployed phi3.5 endpoint.
-![add the connection and input_data](images/validate_parsing_input.jpg)
+6. Python ノードの入力パラメータを追加して、デプロイされた phi3.5 エンドポイントをリクエストします。
+![接続とinput_dataを追加します](images/validate_parsing_input.jpg)
 
-7. Save the Python Node and run the chat flow to test the phi3.5 model
-![test phi3.5 model](images/save_open_chat_window.jpg)
+7. Python ノードを保存し、チャット フローを実行して phi3.5 モデルをテストします
+![PHI3.5モデルのテスト](images/save_open_chat_window.jpg)
 
-8. Let's test phi3.5 model on the chat window
+8. チャットウィンドウでphi3.5モデルをテストしましょう
 
-> What is the brief history of Microsoft? 
+> マイクロソフトの簡単な歴史は何ですか? 
 

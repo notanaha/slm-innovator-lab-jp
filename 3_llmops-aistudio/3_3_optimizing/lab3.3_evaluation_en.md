@@ -1,72 +1,73 @@
 ---
-layout: default
-title: Lab 3.3.1 Evaluate your models using Prompt Flow (UI)
-permalink: /3_3_1_evaluation/
-parent: Lab 3.3 Overview
-grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
-nav_order: 631
+レイアウト: デフォルト
+タイトル: Lab 3.3.1 Evaluate your models using Prompt Flow (UI)
+固定リンク: /3_3_1_evaluation/
+親: ラボ 3.3 の概要
+grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
+nav_order:631
 ---
 
-# Lab 3.3.1 Evaluate your models using Prompt Flow (UI)
+# ラボ 3.3.1 プロンプト フロー (UI) を使用してモデルを評価する
 
-![LLMOps](images/evaluation-monitor-flow.png)
-[Evaluating and monitoring of generative AI applications](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/evaluation-approach-gen-ai#evaluating-and-monitoring-of-generative-ai-applications)
+![LLM
+](images/evaluation-monitor-flow.png)
+[ジェネレーティブAIアプリケーションの評価とモニタリング](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/evaluation-approach-gen-ai#evaluating-and-monitoring-of-generative-ai-applications)
 
-### Prerequisites
+### 前提 条件
 
-- An Azure subscription where you can create an AI Hub and AI project Resource
-- Deployed gpt-4o model in Azure AI Studio
-
-
-### Task
-
-- I want to quantitatively verify how well the model and RAG are answering questions 
-- I want to benchmark in bulk data before production to find bottlenecks and improve 
+- AI Hub と AI プロジェクト リソースを作成できる Azure サブスクリプション
+- Azure AI Studio にデプロイされた gpt-4o モデル
 
 
-### TOC
-- 1️⃣ Manual evaluations to review outputs of the selected model
-- 2️⃣ Conduct A/B testing with your LLM variants
+### タスク
 
-- 3️⃣ Create Automated Evaluation with variants
+- モデルとRAGがどれだけ疑問に答えているかを定量的に検証したい 
+- 本番環境で一括データをベンチマークし、ボトルネックを見つけて改善したい 
 
-- 4️⃣ Create Custom Evaluation flow on Prompt flow
 
-### 1️⃣ Manual evaluations to review outputs of the selected model 
-1. Go to the Azure AI Studio > Tools > Evaluation
-2. Click on the "Manual Evaluation" tab to create an manual evaluation to assess and compare AI application performance.
-![new manual evaluation](images/new_manual_evaluation.jpg)
+### 目次
+- 1️(2)選択したモデルの出力を確認するための手動評価
+- 2️(2) LLMバリアントでA/Bテストを実施
 
-3. Select model you are going to test on the configurations and update the system message below. 
+- 3️⃣ バリアントによる自動評価の作成
+
+- 4️⃣ プロンプトフローでカスタム評価フローを作成
+
+### 1️(2)選択したモデルの出力を確認するための手動評価 
+1. Azure AI Studio の > Tools > Evaluation に移動する
+2. 「手動評価」タブをクリックして、AIアプリケーションのパフォーマンスを評価および比較するための手動評価を作成します。
+![新しいマニュアル評価](images/new_manual_evaluation.jpg)
+
+3. 構成でテストするモデルを選択し、以下のシステムメッセージを更新します。 
 ```
 You are a math assistant, and you are going to read the context which includes simple math questions and answer with numbers only. 
 ```
-4. Click the import test data button to import the test data. You can add your data as well if you want to test the model with the context.
+4. 「テストデータのインポート」ボタンをクリックして、テストデータをインポートします。コンテキストを使用してモデルをテストする場合は、データを追加することもできます。
 
-5. Select the dataset you want to test on the model.
-![select dataset](images/import_test_data_select_dataset.jpg)
+5. モデルでテストするデータセットを選択します。
+![データセットの選択](images/import_test_data_select_dataset.jpg)
 
-6. Map the test data. Select question as the input and answer as the output. Click the add button to import the test data.
-![map data](images/import_test_data_map_data.jpg)
+6. テストデータをマップします。入力として question を選択し、出力として answer を選択します。追加ボタンをクリックして、テストデータをインポートします。
+![マップデータ](images/import_test_data_map_data.jpg)
 
-7. Click the Run button to test the model with the test data. After the test is done, you can see and export the results, and you can also compare the results with the expected answers. Use thumbs up or down to evaluate the model's performance. As this result is for the manual evaluation, you can handover the result dataset to automated evaluation to evaluate the model in bulk data.
-![run test](images/manual_eval_run_test.jpg)
+7. [実行] ボタンをクリックして、テスト データを使用してモデルをテストします。テストが完了したら、結果を表示してエクスポートしたり、結果を期待される回答と比較したりすることもできます。親指を上または下に使用して、モデルのパフォーマンスを評価します。この結果は手動評価用であるため、結果データセットを自動評価に引き継いで、モデルを一括データで評価できます。
+![テストの実行](images/manual_eval_run_test.jpg)
 
-### 2️⃣ Conduct A/B testing with your LLM variants
-Create a new chat flow with variants 
-1. Azure AI Studio > Prompt flow > Click +Create to create a new flow
-![create a new flow](../3_2_prototyping/images/create_new_flow.jpg)
+### 2️(2) LLMバリアントでA/Bテストを実施
+バリアントを使用した新しいチャットフローを作成する 
+1. Azure AI Studio > プロンプト フロー > [+ 作成] をクリックして新しいフローを作成します
+![新しいフローを作成する](../3_2_prototyping/images/create_new_flow.jpg)
 
-2. In order to get a user-friendly chat interface, select Chat flow
-![select Chat flow](../3_2_prototyping/images/create_new_chat_flow.jpg)
+2. ユーザーフレンドリーなチャットインターフェースを取得するには、[チャットフロー]を選択します
+![チャットフローを選択します](../3_2_prototyping/images/create_new_chat_flow.jpg)
 
-3. Put your folder name to store your Promptflow files and click the Create button
-![Put your folder name](../3_2_prototyping/images/put_folder_name.jpg)
+3. Promptflowファイルを保存するフォルダ名を入力し、[作成]ボタンをクリックします
+![フォルダ名を入力してください](../3_2_prototyping/images/put_folder_name.jpg)
 
-4. Change as raw file model to modify your basic chat flow
-![Put your folder name](../3_2_prototyping/images/change_raw_file_mode.jpg)
+4. RAWファイルモデルとして変更して、基本的なチャットフローを変更します
+![フォルダ名を入力してください](../3_2_prototyping/images/change_raw_file_mode.jpg)
 
-5. Modify flow.dag.yaml attach the source code below. 
+5. flow.dag.yamlを修正し、以下のソースコードを添付してください。 
 ```
 id: chat_variant_flow
 name: Chat Variant Flow
@@ -112,10 +113,10 @@ nodes:
 environment:
   python_requirements_txt: requirements.txt
 ```
-6. Change the Raw file mode again and Add the connection parameters of the LLM Node to call the deployed LLM model and Click Validate and parse input. Check inputs to the LLM Node in place.
-![add the connection parameters](images/add_gpt4o_node2.jpg)
+6. Raw ファイル・モードを再度変更し、デプロイされた LLM モデルを呼び出すように LLM ノードの接続パラメーターを追加し、[Validate and parse input] をクリックします。LLM ノードへの入力を所定の位置に確認します。
+![接続パラメータを追加する](images/add_gpt4o_node2.jpg)
 
-7. attach the prompt below on your chat_variants Node to request the deployed model. 
+7. 以下のプロンプトをchat_variantsノードに添付して、デプロイされたモデルをリクエストします。 
 
 ```
 system:
@@ -146,16 +147,16 @@ user:
 {{question}}
 ```
 
-8. Save your modified flow. Make sure that your compute instance is running to execute the updated chat flow
-![create a new flow](../3_2_prototyping/images/save_and_run_compute_session.jpg)
+8. 変更したフローを保存します。更新されたチャット フローを実行するためにコンピューティング インスタンスが実行されていることを確認します
+![新しいフローを作成する](../3_2_prototyping/images/save_and_run_compute_session.jpg)
 
-9. Let's test the current flow on the chat window
-![test the flow](images/test_current_flow.jpg)
+9. チャットウィンドウで現在のフローをテストしてみましょう
+![フローをテストする](images/test_current_flow.jpg)
 
-10. Now you can generate a variant and compare the results with the prompt written in Korean. Click the generate variant button to create a new variant.
-![add variants](images/add_variants.jpg)
+10. これで、バリアントを生成し、韓国語で書かれたプロンプトと結果を比較できます。「generate variant (バリアントの生成)」ボタンをクリックして、新しいバリアントを作成します。
+![バリエーションを追加](images/add_variants.jpg)
 
-11. Add the variant name and the prompt in Korean below. Click the save button to save the variant.
+11. 以下に、バリアント名と韓国語のプロンプトを追加します。保存ボタンをクリックして、バリアントを保存します。
 
 ```
 system:
@@ -185,26 +186,26 @@ user:
 {{question}}
 ```
 
-12. Now you can test the variants on the chat window setting one of variants as default. Click the Run button to test the variant. 
+12. これで、チャットウィンドウでバリアントの1つをデフォルトとして設定して、バリアントをテストできます。「実行」ボタンをクリックして、バリアントをテストします。 
 
 
-### 3️⃣ Create QnA Relevance Evaluation flow with variants
-1. Go to the Azure AI Studio > Tools > Evaluation
+### 3️⃣ バリアントを使用した QnA 関連性評価フローの作成
+1. Azure AI Studio の > Tools > Evaluation に移動する
 
-2. Click on the "+New Evaluation" on the Automated evaluations tab to create. 
+2. [自動評価] タブの [+ 新しい評価] をクリックして作成します。 
 
-3. Click on the "Prompt flow" to select a flow to evaluaute its output
-![new evaluation](images/new_promptflow_evaluation.jpg)
+3. 「プロンプトフロー」をクリックして、その出力を評価するフローを選択します
+![新しい評価](images/new_promptflow_evaluation.jpg)
 
-4. Add basic information for the evaluation. Put the name of the evaluation as 'variant1_en' and select the flow you want to evaluate. Select "Question and answer with context" as your evaluation scenario. Click the Next button to continue.
-![basic information](images/evaluation_basic_info.jpg)
+4. 評価の基本情報を追加します。評価の名前を「variant1_en」として入れ、評価するフローを選択します。評価シナリオとして [コンテキストを使用した質問と回答] を選択します。「次へ」ボタンをクリックして続行します。
+![基本情報](images/evaluation_basic_info.jpg)
 
-5. Add 'simple_qna_data_en.jsonl' as your dataset and map the question, firstName, context and dataset column. Click the Next button to continue.
-![map data](images/evaluation_map_data.jpg)
+5. データセットとして 'simple_qna_data_en.jsonl' を追加し、question、firstName、context、dataset 列をマップします。「次へ」ボタンをクリックして続行します。
+![マップデータ](images/evaluation_map_data.jpg)
 
-6. Select Evaluation Metrics. You can select the metrics against which you want to evaluate the model. Enter the connection and deployment model and click the Next button, then review the final configuration and click the Submit button to start/wait for the evaluation.
-![select metrics](images/evaluation_select_metrics.jpg)
-![running evaluation](images/evaluation_running.jpg)
+6. 「評価メトリック」を選択します。モデルを評価する指標を選択できます。接続モデルとデプロイモデルを入力して [次へ] ボタンをクリックし、最終的な設定を確認して [送信] ボタンをクリックして評価を開始/待機します。
+![メトリクスの選択](images/evaluation_select_metrics.jpg)
+![評価の実行](images/evaluation_running.jpg)
 
-> 🧪 +For Your Information<br>
-Evaluator is an asset that can be used to run evaluation. You can define evaluator in SDK and run evaluation to generate scores of one or more metrics. In order to use AI-assisted quality and safety evaluators with the prompt flow SDK, check the [Evaluate with the prompt flow SDK](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/develop/flow-evaluate-sdk)  
+>  +ご参考までに<br>
+エバリュエーターは、評価を実行するために使用できる資産です。SDK でエバリュエーターを定義し、評価を実行して 1 つ以上のメトリックのスコアを生成できます。プロンプトフローSDKでAI支援の品質および安全性評価者を使用するには、[プロンプトフローSDKによる評価を確認してください](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/develop/flow-evaluate-sdk)  
