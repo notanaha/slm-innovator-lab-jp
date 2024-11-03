@@ -1,13 +1,13 @@
 ---
-レイアウト: デフォルト
-タイトル: ラボ 3.2.1 Azure AI Studio プロンプト フローを使用した微調整されたモデルを使用した Gen AI アプリのプロトタイプ作成
-固定リンク: /3_2_1_prototyping_en/
-親: ラボ 3.2 の概要
-grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:621
+layout: default
+title: Lab 3.2.1 Prototyping a Gen AI app using the fine-tuned model with Azure AI Studio Prompt Flow
+permalink: /3_2_1_prototyping_en/
+parent: Lab 3.2 Overview
+grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 621
 ---
 
-# ラボ 3.2.1 Azure AI Studio プロンプト フローで微調整されたモデルを使用した Gen AI アプリのプロトタイプ作成
+# Lab 3.2.1 Prototyping a Gen AI app using the fine-tuned model with Azure AI Studio Prompt Flow
 
 ### 前提 条件
 

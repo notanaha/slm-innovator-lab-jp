@@ -1,17 +1,16 @@
 ---
-レイアウト: デフォルト
-タイトル: Lab 3.4.1 Content Safety with Azure AI studio before production
-固定リンク: /3_4_contentfilter_en/
-親: ラボ 3.4 の概要
-grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:641
+layout: default
+title: Lab 3.4.1 Content Safety with Azure AI studio before production
+permalink: /3_4_contentfilter_en/
+parent: Lab 3.4 Overview
+grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 641
 ---
 
-# ラボ 3.4: 運用前の Azure AI Studio を使用したコンテンツの安全性
+# Lab 3.4 Content Safety with Azure AI studio before production
 
-![LLM
-](images/content_filtering_api_support.jpg)
-[各 API バージョンでのアノテーションの可用性](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter?tabs=warning%2Cuser-prompt%2Cpython-new#:~:text=See%20the%20following%20table%20for%20the%20annotation%20availability%20in%20each%20API%20version%3A)
+![LLMOps](images/content_filtering_api_support.jpg)
+[Annotation availability in each API version](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter?tabs=warning%2Cuser-prompt%2Cpython-new#:~:text=See%20the%20following%20table%20for%20the%20annotation%20availability%20in%20each%20API%20version%3A)
 
 ### 前提 条件
 

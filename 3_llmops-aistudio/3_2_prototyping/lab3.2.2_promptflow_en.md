@@ -1,13 +1,13 @@
 ---
-レイアウト: デフォルト
-タイトル: ラボ 3.2.2 SLM と LLM と Azure AI Studio プロンプト フロー (UI) の比較
-固定リンク: /3_2_2_prototyping/
-親: ラボ 3.2 の概要
-grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:622
+layout: default
+title: Lab 3.2.2 SLM and LLM comparison with Azure AI Studio Prompt Flow (UI)
+permalink: /3_2_2_prototyping/
+parent: Lab 3.2 Overview
+grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 622
 ---
 
-# ラボ 3.2.2: SLM と LLM と Azure AI Studio プロンプト フロー (UI) の比較
+# Lab 3.2.2 SLM and LLM comparison with Azure AI Studio Prompt Flow (UI)
 
 ### 前提 条件
 

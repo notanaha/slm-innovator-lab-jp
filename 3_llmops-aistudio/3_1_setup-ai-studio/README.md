@@ -1,11 +1,11 @@
 ---
-レイアウト: デフォルト
-タイトル: Lab 3.1 Azure AI Studio for LLMOps のセットアップ
-親: ラボ 3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:61
+layout: default
+title: Lab 3.1 Set Up Azure AI Studio for LLMOps
+parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 61
 ---
 
-# ラボ 3.1 シナリオ 1: LLMOps 用に Azure AI Studio を設定する
+# Lab 3.1 Scenario 1: Set Up Azure AI Studio for LLMOps
 
 ## 概要
 このラボでは、LLMOps のプロンプト フローを使用して Azure AI Studio を設定する方法について説明します。 

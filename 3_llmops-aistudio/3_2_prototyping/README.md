@@ -1,13 +1,13 @@
 ---
-レイアウト: デフォルト
-タイトル: Lab 3.2 Overview
-固定リンク: /3_2_overview/
-親: ラボ 3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:62
-has_children:真
+layout: default
+title: Lab 3.2 Overview
+permalink: /3_2_overview/
+parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 62
+has_children: true
 ---
 
-# ラボ 3.2 シナリオ 1: プロンプト フローを使用して第 1 世代 AI アプリケーションのプロトタイプを作成する
+# Lab 3.2 Scenario 1: Prototype your first gen AI application with prompt flow
 
 ## 概要
 このラボでは、Prompt フローを使用して生成 AI アプリケーションのプロトタイプを作成する方法を学習します。プロンプト フローを備えた Azure AI Studio は、LLM のアイデアを作成して探索し、特定のユース ケースを説得するのに役立ちます。 

@@ -1,17 +1,16 @@
 ---
-レイアウト: デフォルト
-タイトル: Lab 3.3.2 groundness evaluation using Prompt Flow (Code)
-固定リンク: /3_3_2_evaluation/
-親: ラボ 3.3 の概要
-grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:632
+layout: default
+title: Lab 3.3.2 groundness evaluation using Prompt Flow (Code)
+permalink: /3_3_2_evaluation/
+parent: Lab 3.3 Overview
+grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 632
 ---
 
-# ラボ 3.3.2 プロンプトフローを用いた根拠性評価 (コード)
+# Lab 3.3.2 groundness evaluation using Prompt Flow (Code)
 
-![LLM
-](images/evaluation-monitor-flow.png)
-[ジェネレーティブAIアプリケーションの評価とモニタリング](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/evaluation-approach-gen-ai#evaluating-and-monitoring-of-generative-ai-applications)
+![LLMOps](images/evaluation-monitor-flow.png)
+[Evaluating and monitoring of generative AI applications](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/evaluation-approach-gen-ai#evaluating-and-monitoring-of-generative-ai-applications)
 
 ### 前提 条件
 

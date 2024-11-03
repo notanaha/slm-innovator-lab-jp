@@ -1,13 +1,13 @@
 ---
-レイアウト: デフォルト
-タイトル: Lab 3.3.1 Evaluate your models using Prompt Flow (UI)
-固定リンク: /3_3_1_evaluation/
-親: ラボ 3.3 の概要
-grand_parent:ラボ3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:631
+layout: default
+title: Lab 3.3.1 Evaluate your models using Prompt Flow (UI)
+permalink: /3_3_1_evaluation/
+parent: Lab 3.3 Overview
+grand_parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 631
 ---
 
-# ラボ 3.3.1 プロンプト フロー (UI) を使用してモデルを評価する
+# Lab 3.3.1 Evaluate your models using Prompt Flow (UI)
 
 ![LLM
 ](images/evaluation-monitor-flow.png)

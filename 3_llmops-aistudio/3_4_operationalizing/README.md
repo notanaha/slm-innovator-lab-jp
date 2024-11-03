@@ -1,13 +1,11 @@
 ---
-レイアウト: デフォルト
-タイトル: Lab 3.4 Overview
-固定リンク: /3_4_overview/
-親: ラボ 3。Azure AI Studio を使用した SLM の LLMOps
-nav_order:64
-has_children:真
+layout: default
+title: Lab 3.4 Overview
+permalink: /3_4_overview/
+parent: Lab 3. LLMOps for SLM with Azure AI Studio
+nav_order: 64
+has_children: true
 ---
-
-# ラボ 3.4 シナリオ 4: 運用前の Azure AI Studio を使用したコンテンツの安全性
 
 ## 概要
 このラボでは、コンテンツ フィルターを使用して運用環境のデプロイを確保する方法を体験します。このコンテンツ フィルタリング システムは Azure AI Content Safety を利用しており、有害なコンテンツの出力を検出して防止することを目的とした分類モデルのアンサンブルを通じて、プロンプト入力と完了出力の両方を実行することで機能します。API 構成とアプリケーション設計のバリエーションは、完了に影響を与え、フィルタリング動作に影響を与える可能性があります。
