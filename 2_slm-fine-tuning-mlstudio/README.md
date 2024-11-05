@@ -26,11 +26,11 @@ nav_order: 5
     pip install -r requirements.txt
     ```
 3. 目的のユースケースに使用するモデルを選択します。
-    - [ファイ-3、ファイ-3.5](phi3)
-        - [オプション1.MLフロー] それぞれ Run [`1_training_mlflow.ipynb`](phi3/1_training_mlflow.ipynb) と [`2_serving.ipynb`](phi3/2_serving.ipynb)を実行します。
-        - [オプション2.習慣] それぞれ Run [`1_training_custom.ipynb`](phi3/1_training_custom.ipynb) と [`2_serving.ipynb`](phi3/2_serving.ipynb)を実行します。
+    - [Phi-3、Phi-3.5](phi3)
+        - [Option 1.MLフロー] それぞれ Run [`1_training_mlflow.ipynb`](phi3/1_training_mlflow.ipynb) と [`2_serving.ipynb`](phi3/2_serving.ipynb)を実行します。
+        - [Option 2.Custom] それぞれ Run [`1_training_custom.ipynb`](phi3/1_training_custom.ipynb) と [`2_serving.ipynb`](phi3/2_serving.ipynb)を実行します。
         - *(オプション)* LLM データセットの前処理に関心がある場合は、フォルダ内のハンズオンを参照してください `phi3/dataset-preparation` 。
-    - [フィレンツェ2-VQA](florence2-VQA)
+    - [Florence2-VQA](florence2-VQA)
         - それぞれ Run [`1_training_mlflow.ipynb`](florence2-VQA/1_training_mlflow.ipynb) と [`2_serving.ipynb`](florence2-VQA/2_serving.ipynb)を実行します。
     - を編集することを忘れないでください`config.yml`。
 
