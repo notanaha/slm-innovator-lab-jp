@@ -10,19 +10,35 @@ Azure AI/ML Platform を基盤とする SLM Innovator Lab で、AI プロジェ�
 
 ハンズオンガイド:https://azure.github.io/slm-innovator-lab/
 
+<<<<<<< HEAD
 ## 新しいコンテンツ (2024 年 10 月 25 日)
 LLMOpsとpromptflow python SDK<br>
 このハンズオンでは、Python SDK を使用して、新しいフローを作成し、チャット フロー構造を定義し、微調整されたモデル エンドポイントを統合する方法を学習します。また、フローを使用してモデルのパフォーマンスを比較および評価する方法についても学習します。これは、以前に Azure AI Studio UI に基づいて利用可能だったハンズオンに追加されるものです。
+=======
+## New content (25-Oct-2024)
+🔥 LLMOps with promptflow python SDK<br>
+In this hands-on, you will learn how to create a new flow, define the chat flow structure, and integrate the fine-tuned model endpoint using Python SDK. You will also learn how to compare and evaluate the model's performance using the flows. This is in addition to the hands-on that was previously available based on the Azure AI Studio UI. 
+>>>>>>> upstream/main
 <br>
 <a href="https://github.com/Azure/slm-innovator-lab/blob/main/3_llmops-aistudio/3_2_prototyping/promptflow_with_code.ipynb">ノートブックに移動します</a>
 <br><br>
+<<<<<<< HEAD
 Microsoft Olive モデルの最適化 <br>
 Microsoft Olive は、AI モデルのデプロイを効率化するために Microsoft が開発したハードウェア対応の AI モデル最適化ツールチェーンです。オリーブは、特にエッジデバイス、クラウド、およびさまざまなハードウェア構成で使用するために、AIモデルをより速く、より効率的にすることで、デプロイ用のAIモデルを準備するプロセスを簡素化します。このハンズオンでは、デバイス上またはハイブリッドのデプロイ シナリオを検討します。
+=======
+🔥 Microsoft Olive model optimization <br>
+Microsoft Olive is a hardware-aware AI model optimization toolchain developed by Microsoft to streamline the deployment of AI models. Olive simplifies the process of preparing AI models for deployment by making them faster and more efficient, particularly for use on edge devices, cloud, and various hardware configurations. This hands-on considers on-device or hybrid deployment scenarios.
+>>>>>>> upstream/main
 <br>
 <a href="https://github.com/Azure/slm-innovator-lab/blob/main/2_slm-fine-tuning-mlstudio/phi3/3_optimization_olive.ipynb">ノートブックに移動します</a>
 <br><br>
+<<<<<<< HEAD
 Python SDK<br> によるコンテンツの安全性
 このハンズオンでは、テキストブロックリストの管理、性的なコンテンツ、暴力、憎悪、自傷行為に関するテキストと画像の分析を、複数の深刻度レベルで行うことができます。また、Azure Open AI Service と統合する方法についても学習します: Azure Open AI Service を使用して、有害なコンテンツに対してコンテンツを書き換えます。
+=======
+🔥 Content Safety with python SDK<br>
+In this hands-on, you will be able to: manage text blocklist, analyze text and images for sexual content, violence, hate, and self-harm with multi-severity levels. You will also learn how to integrate with Azure Open AI Service: Use the Azure Open AI Service to rewrite the content for harmful content.
+>>>>>>> upstream/main
 <br>
 <a href="https://github.com/Azure/slm-innovator-lab/blob/main/3_llmops-aistudio/3_4_operationalizing/contentsafety_with_code.ipynb">ノートブックに移動</a>
 
@@ -34,12 +50,23 @@ Python SDK<br> によるコンテンツの安全性
 - [Azure AI Studio の概要](https://aka.ms/azureaistudio): プロジェクトを作成する
 - [Azure AI ドキュメント インテリジェンス (v4.0 - 2024-02-29 プレビュー)](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0)
 
+<<<<<<< HEAD
 - ***[Computing Instance - コード開発用]*** GPU を使用しないローエンド インスタンスをお勧めします: **[Standard_E2as_v4]** (AMD 2 コア、16 GB RAM、32 GB ストレージ) または **[Standard_DS11_v2]** (Intel 2 コア、14 GB RAM、28 GB ストレージ、GPU なし)  
 - ***[Computing Cluster - SLM/LLM の微調整用]*** 単一の NVIDIA A100 GPU ノード (**[Standard_NC24ads_A100_v4]**) をお勧めします。専用のクォータがない場合、または予算が限られている場合は、
 **[低優先度 VM]** を選択します。
 - ***[Computing Cluster - SLM/LLM デプロイ用]*** 単一の NVIDIA V100 GPU ノード (**[Standard_NC6s_v3]**) または 単一の NVIDIA A100 GPU ノード (**[Standard_NC24ads_A100_v4]**) をお勧めします。
 
 上記の要件をまだお持ちでない場合は、まずラボの準備に進んでください。
+=======
+- ***[Compute instance - for code development]*** A low-end instance without GPU is recommended: **[Standard_E2as_v4] (AMD 2 cores, 16GB RAM, 32GB storage) or **[Standard_DS11_v2]** (Intel 2 cores, 14GB RAM, 28GB storage, No GPUs)  
+- ***[Compute cluster - for SLM/LLM fine-tuning]*** A single NVIDIA A100 GPU node (**[Standard_NC24ads_A100_v4]**) is recommended. If you do not have a dedicated quota or are on a tight budget, choose **[Low-priority VM]**.
+- ***[SLM/LLM deployment]*** Two NVIDIA V100 GPUs (**[Standard_NC6s_v3]**) or two NVIDIA A100 GPUs (**[Standard_NC24ads_A100_v4]**) are recommended. 
+
+**Note**
+For managed online endpoints, [Azure ML reserves 20% of the quota for the deployment].[^1] If you request a given number of instances for those VM SKUs in a deployment, you must have a quota for `ceil(1.2 × number of instances requested for deployment) × number of cores for the VM SKU` available to avoid getting an error. For example, if you request 1 instances of a `Standard_NC6s_v3` VM (that comes with six cores) in a deployment, you should have a quota for 12 cores (ceil(1.2 × 1 instances) = 2, 2 × 6 cores) available.  
+
+In case you do not have any of the above requirements ready yet, please go to Lab preparation first.
+>>>>>>> upstream/main
 ### [Lab 0. Lab preparation](0_lab_preparation)
 
 **アカウントに合わせてファイルを変更することを忘れないでください `.env` 。名前を変更する `.env.sample` `.env` か、コピーして使用します**
@@ -139,4 +166,10 @@ CLA を作成し、PR を適切に装飾します (ステータス チェック�
 [Standard_E2as_v4]: https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/memory-optimized/easv4-series
 [Standard_NC24ads_A100_v4]: https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/gpu-accelerated/nca100v4-series?tabs=sizebasic
 [Standard_NC6s_v3]: https://learn.microsoft.com/azure/virtual-machines/sizes/gpu-accelerated/ncv3-series?tabs=sizebasic
+<<<<<<< HEAD
 [低優先度 VM]: https://learn.microsoft.com/en-us/azure/machine-learning/how-to-manage-optimize-cost?view=azureml-api-2#low-pri-vm
+=======
+[Low-priority VM]: https://learn.microsoft.com/en-us/azure/machine-learning/how-to-manage-optimize-cost?view=azureml-api-2#low-pri-vm
+
+[^1]: This extra quota is reserved for system-initiated operations such as OS upgrades and VM recovery, and it won't incur cost unless such operations run.
+>>>>>>> upstream/main
