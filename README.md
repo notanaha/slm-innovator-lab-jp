@@ -34,15 +34,15 @@ Microsoft Olive は、AI モデルのデプロイを効率化するために Mic
 - [Azure AI Studio の概要](https://aka.ms/azureaistudio): プロジェクトを作成する
 - [Azure AI ドキュメント インテリジェンス (v4.0 - 2024-02-29 プレビュー)](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0)
 
-- ***[コンピューティング インスタンス - コード開発用]*** GPU を使用しないローエンド インスタンスをお勧めします: **[Standard_E2as_v4] (AMD 2 コア、16 GB RAM、32 GB ストレージ) または **[Standard_DS11_v2]** (Intel 2 コア、14 GB RAM、28 GB ストレージ、GPU なし)  
-- ***[コンピューティングクラスター - SLM/LLM の微調整用]*** 単一の NVIDIA A100 GPU ノード ()**[Standard_NC24ads_A100_v4]** をお勧めします。専用のクォータがない場合、または予算が限られている場合は、 を選択します**[低優先度 VM]**。
+- ***[Computing Instance - コード開発用]*** GPU を使用しないローエンド インスタンスをお勧めします: **[Standard_E2as_v4]** (AMD 2 コア、16 GB RAM、32 GB ストレージ) または **[Standard_DS11_v2]** (Intel 2 コア、14 GB RAM、28 GB ストレージ、GPU なし)  
+- ***[Computing Cluster - SLM/LLM の微調整用]*** 単一の NVIDIA A100 GPU ノード (**[Standard_NC24ads_A100_v4]**) をお勧めします。専用のクォータがない場合、または予算が限られている場合は、**[低優先度 VM]** を選択します。
 - ***[SLM/LLM の展開]*** 2 つの NVIDIA V100 GPU (**[Standard_NC6s_v3]**) または 2 つの NVIDIA A100 GPU (**[Standard_NC24ads_A100_v4]**) をお勧めします。 
 
-**手記**
+**Note**
 管理されたオンライン エンドポイントの場合、 [Azure ML では、デプロイのクォータの 20% が予約されています].[^1] デプロイ内の VM SKU に対して特定の数のインスタンスをリクエストする場合は、 `ceil(1.2 × number of instances requested for deployment) × number of cores for the VM SKU` エラーが発生しないように、使用可能なクォータが必要です。たとえば、 `Standard_NC6s_v3` デプロイで VM (6 コアが付属) の 1 つのインスタンスを要求する場合、12 コア (ceil(1.2 × 1 インスタンス) = 2, 2 × 6 コア) のクォータが使用可能である必要があります。  
 
 上記の要件をまだお持ちでない場合は、まずラボの準備に進んでください。
-### [ラボ 0。ラボの準備](0_lab_preparation)
+### [Lab 0. ラボの準備](0_lab_preparation)
 
 **アカウントに合わせてファイルを変更することを忘れないでください `.env` 。名前を変更する `.env.sample` `.env` か、コピーして使用します**
 
@@ -75,30 +75,30 @@ Microsoft Olive は、AI モデルのデプロイを効率化するために Mic
 ## 参照
 
 <details markdown="block">
-<summary>膨らむ</summary>
+<summary>Expand</summary>
 
 ### データ準備
-- [進化-指示](https://arxiv.org/pdf/2304.12244)
+- [Evolve-Instruct](https://arxiv.org/pdf/2304.12244)
 - [GLAN (一般化命令チューニング)](https://arxiv.org/pdf/2402.13064)
-- [オートエボリューション-インストラクション](https://arxiv.org/pdf/2406.00770)
+- [Auto Evolve-Instruct](https://arxiv.org/pdf/2406.00770)
 - [Azure Machine Learning の例](https://github.com/Azure/azureml-examples)
 
 ### SLMの微調整
 
-#### ファイ-3/ファイ-3.5
+#### Phi-3/Phi-3.5
 - [Azure ML を使用した Small Language Model (SLM) Phi-3 の微調整](https://techcommunity.microsoft.com/t5/ai-machine-learning-blog/finetune-small-language-model-slm-phi-3-using-azure-machine/ba-p/4130399)
 - [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct): これは Microsoft の公式 Phi-3-mini-4k-instruct モデルです。
 - [microsoft/Phi-3-mini-128k-instruct](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct): これは Microsoft の公式 Phi-3-mini-128k-instruct モデルです。
 - [microsoft/Phi-3.5-mini-instruct](https://huggingface.co/microsoft/Phi-3.5-mini-instruct): これは Microsoft の公式 Phi-3.5-mini-instruct モデルです。
 - [microsoft/Phi-3.5-MoE-instruct](https://huggingface.co/microsoft/Phi-3.5-MoE-instruct): これは Microsoft の公式 Phi-3.5-MoE-instruct モデルです。
 - [KMMLU、CLIcK、HAE-RAEデータセットを用いたLLM/SLMモデルの韓国語能力評価](https://github.com/daekeun-ml/evaluate-llm-on-korean-dataset)
-- [大国ML/ファイ-3-ミディアム-4k-インストラクション-ko-poc-v0.1](https://huggingface.co/daekeun-ml/Phi-3-medium-4k-instruct-ko-poc-v0.1)
+- [daekeun-ml/Phi-3-medium-4k-instruct-ko-poc-v0.1](https://huggingface.co/daekeun-ml/Phi-3-medium-4k-instruct-ko-poc-v0.1)
 
-#### Florence-2 (フィレンツェ 2)
+#### Florence-2 
 - [Azure ML Python SDK と MLflow を使用した VQA (Visual Question Answering) の Florence-2 の微調整](https://techcommunity.microsoft.com/t5/ai-machine-learning-blog/fine-tuning-florence-2-for-vqa-visual-question-answering-using/ba-p/4181123)
-- [抱きしめて顔のブログ - Finetune Florence-2 on DoCVQA](https://huggingface.co/blog/finetune-florence2)
+- [Hugging Face Blog - Finetune Florence-2 on DoCVQA](https://huggingface.co/blog/finetune-florence2)
 
-### LLMOpsの
+### LLMOps
 - [LLMOps with Prompt フロー (AI Studio と Azure Machine Learning の両方をサポート)](https://github.com/microsoft/llmops-promptflow-template)
 
 </details>
