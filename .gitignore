@@ -174,3 +174,5 @@ _site/
 
 Gemfile.lock
 **/config_copy.yml
+**/config_copy.json
+**/.promptflow/
